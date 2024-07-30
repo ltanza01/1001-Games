@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hai Vinto!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="victory-message">Hai Vinto!</h1>
+    <img src="assets\becede1008e8717f7c021f46a285fd58.gif" alt="Fuochi d'artificio">
+    <button id="new-game">Inizia una Nuova Partita</button>
+    <script>
+        // Ottieni il nome del vincitore dalla query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const winnerName = urlParams.get('winner');
+        if (winnerName) {
+            document.getElementById('victory-message').textContent = `${winnerName} ha Vinto!`;
+        }
+
+        // Aggiungi un listener per il pulsante "Nuova Partita"
+        document.getElementById('new-game').addEventListener('click', function() {
+            window.location.href = 'menu.html'; // Riporta al menu iniziale
+        });
+    </script>
+</body>
+</html>

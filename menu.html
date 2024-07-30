@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Iniziale</title>
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+    <h1>Gioco del Tris</h1>
+    <form id="menu-form">
+        <input type="text" id="player1" name="player1" placeholder="Nome Giocatore 1" autocomplete="off" required>
+        <input type="text" id="player2" name="player2" placeholder="Nome Giocatore 2" autocomplete="off" required>
+        <button type="submit">Inizia il Gioco</button>
+    </form>
+    <script>
+        document.getElementById('menu-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const player1 = document.getElementById('player1').value;
+            const player2 = document.getElementById('player2').value;
+            if (player1 && player2) {
+                window.location.href = `game.html?player1=${encodeURIComponent(player1)}&player2=${encodeURIComponent(player2)}`;
+            }
+        });
+    </script>
+</body>
+</html>
