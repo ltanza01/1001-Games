@@ -12,30 +12,26 @@ body {
     align-items: center;
 }
 
-/* Titolo del menu */
+/* Titolo del gioco */
 h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
 }
 
-/* Stile del form */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Informazioni sul turno e pulsante di reset */
+#game-info {
+    margin-bottom: 20px;
 }
 
-/* Input del nome giocatore */
-input[type="text"] {
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 250px;
+/* Messaggio di turno */
+#turn {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-/* Pulsante del menu */
-button {
+/* Pulsante di reset */
+#reset-button {
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
@@ -46,32 +42,22 @@ button {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-button:hover {
+#reset-button:hover {
     background-color: #0056b3;
 }
 
-button:active {
+#reset-button:active {
     background-color: #004494;
     transform: scale(0.98);
 }
 
-/* Stile del messaggio di stato nella pagina di gioco */
-#game-info {
-    margin-bottom: 20px;
-}
-
-#status {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-}
-
 /* Griglia di gioco */
-#game-board {
+#board {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
     gap: 5px;
-    justify-content: center;
+    margin: 20px auto;
 }
 
 .cell {
@@ -81,11 +67,30 @@ button:active {
     width: 100px;
     height: 100px;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     font-size: 2em;
+    font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .cell:hover {
     background-color: #f0f0f0;
+}
+
+.cell.x {
+    color: #007BFF; /* Colore di "X" */
+}
+
+.cell.o {
+    color: #FF5722; /* Colore di "O" */
+}
+
+/* Gestisci la visualizzazione del contenuto delle celle */
+.cell.X {
+    color: #007BFF; /* Colore di "X" */
+}
+
+.cell.O {
+    color: #FF5722; /* Colore di "O" */
 }
