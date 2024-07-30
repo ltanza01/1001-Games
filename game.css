@@ -1,8 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
-    color: #333;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -12,85 +11,72 @@ body {
     align-items: center;
 }
 
-/* Titolo del gioco */
 h1 {
     font-size: 2.5em;
+    color: #ffffff;
     margin-bottom: 20px;
 }
 
-/* Informazioni sul turno e pulsante di reset */
-#game-info {
+#turn-indicator {
+    font-size: 1.5em;
+    color: #ffffff;
     margin-bottom: 20px;
 }
 
-/* Messaggio di turno */
-#turn {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-/* Pulsante di reset */
-#reset-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    background-color: #007BFF;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#reset-button:hover {
-    background-color: #0056b3;
-}
-
-#reset-button:active {
-    background-color: #004494;
-    transform: scale(0.98);
-}
-
-/* Griglia di gioco */
 #board {
     display: grid;
     grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 5px;
-    margin: 20px auto;
+    grid-gap: 10px;
+    margin-bottom: 20px;
 }
 
 .cell {
+    width: 100px;
+    height: 100px;
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 100px;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    font-size: 2em;
-    font-weight: bold;
+    font-size: 2.5em;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    color: #000000;
 }
 
-.cell:hover {
-    background-color: #f0f0f0;
-}
-
-.cell.x {
-    color: #007BFF; /* Colore di "X" */
-}
-
-.cell.o {
-    color: #FF5722; /* Colore di "O" */
-}
-
-/* Gestisci la visualizzazione del contenuto delle celle */
 .cell.X {
-    color: #007BFF; /* Colore di "X" */
+    color: #ff0000;
 }
 
 .cell.O {
-    color: #FF5722; /* Colore di "O" */
+    color: #0000ff;
+}
+
+.cell:hover {
+    background-color: #f1f1f1;
+    border-color: #0072ff;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 1.1em;
+    cursor: pointer;
+    background-color: #0072ff;
+    border: none;
+    color: #ffffff;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    margin: 10px;
+    display: inline-block;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
