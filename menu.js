@@ -51,5 +51,4 @@ class Menu {
     }
 }
 
-// Initialize the Menu class when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => new Menu());

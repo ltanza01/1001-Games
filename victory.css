@@ -17,9 +17,6 @@ body {
     width: 100%;
     padding: 30px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 #victory-message {
@@ -57,10 +54,4 @@ button:hover {
 button:active {
     transform: translateY(1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
 }

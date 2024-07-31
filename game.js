@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const turnDisplay = document.getElementById('turn-indicator');
     const cells = document.querySelectorAll('.cell'); 
     const resetButton = document.getElementById('reset-game');
+    const menuButton = document.getElementById('menu-button');
 
     
     let currentPlayer = 'X'; 
@@ -35,7 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
        
         if (checkWin()) {
             const winnerName = currentPlayer === 'X' ? player1Name : player2Name;
-            window.location.href = `victory.html?winner=${encodeURIComponent(winnerName)}&mode=${gameMode}`;
+            const url = `victory.html?winner=${encodeURIComponent(winnerName)}&player1=${encodeURIComponent(player1Name)}&player2=${encodeURIComponent(player2Name)}&mode=${encodeURIComponent(gameMode)}&difficulty=${encodeURIComponent(difficulty)}`;
+            window.location.href = url;
             isGameOver = true;
             return;
         } else if (board.every(cell => cell !== '')) {
@@ -87,7 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         
         if (checkWin()) {
-            window.location.href = `victory.html?winner=${encodeURIComponent(player2Name)}&mode=${gameMode}`;
+            const url = `victory.html?winner=${encodeURIComponent(winnerName)}&player1=${encodeURIComponent(player1Name)}&player2=${encodeURIComponent(player2Name)}&mode=${encodeURIComponent(gameMode)}&difficulty=${encodeURIComponent(difficulty)}`;
+            window.location.href = url;
             isGameOver = true;
         } else if (board.every(cell => cell !== '')) {
             turnDisplay.textContent = 'Pareggio!';
@@ -175,4 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cells.forEach(cell => cell.addEventListener('click', handleClick));
     resetButton.addEventListener('click', resetGame);
+
+    menuButton.addEventListener('click', () => {
+        window.location.href = 'menu.html';
+    });
 });
