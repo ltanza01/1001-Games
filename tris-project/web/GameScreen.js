@@ -8,8 +8,7 @@ export default function GameScreen({ route, navigation }) {
   const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
-      resetGame();
-    
+    resetGame();
   }, [restart]);
 
   useEffect(() => {
@@ -18,7 +17,6 @@ export default function GameScreen({ route, navigation }) {
       setTimeout(() => computerPlay(difficulty), 500);
     }
   }, [currentPlayer, isGameOver]);
-  
 
   const updateTurnDisplay = () => {
     if (isGameOver) return;
@@ -151,10 +149,12 @@ export default function GameScreen({ route, navigation }) {
         {board.map((cell, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.cell, cell === 'X' && styles.cellX, cell === 'O' && styles.cellO]}
+            style={styles.cell}
             onPress={() => handleClick(index)}
           >
-            <Text style={styles.cellText}>{cell}</Text>
+            <Text style={[styles.cellText, cell === 'X' && styles.textX, cell === 'O' && styles.textO]}>
+              {cell}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -175,13 +175,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'linear-gradient(to right, #00c6ff, #0072ff)',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#333',
   },
   turnIndicator: {
     fontSize: 18,
@@ -205,7 +198,12 @@ const styles = StyleSheet.create({
   },
   cellText: {
     fontSize: 32,
-    color: '#333',
+  },
+  textX: {
+    color: '#c2061f',
+  },
+  textO: {
+    color: '#0297e9',
   },
   button: {
     padding: 14,
