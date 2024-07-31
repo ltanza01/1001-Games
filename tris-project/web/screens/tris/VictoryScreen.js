@@ -23,7 +23,7 @@ export default function VictoryScreen({ route, navigation }) {
     <View style={styles.container}>
       <Text style={styles.victoryMessage}>{winner} ha Vinto!</Text>
       <Image
-        source={require('./assets/becede1008e8717f7c021f46a285fd58.gif')}
+        source={require('../../assets/becede1008e8717f7c021f46a285fd58.gif')}
         style={styles.fireworks}
         alt="Fuochi d'artificio"
       />

@@ -4,15 +4,16 @@ import { NavigationContainer, useNavigationState } from '@react-navigation/nativ
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // Schermate di esempio
-import MenuScreen from './web/MenuScreen';
-import GameScreen from './web/GameScreen';
-import VictoryScreen from './web/VictoryScreen';
+import MenuScreen from './web/screens/tris/MenuScreen';
+import GameScreen from './web/screens/tris/GameScreen';
+import HomeScreen from './web/screens/home/HomeScreen';
+import VictoryScreen from './web/screens/tris/VictoryScreen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
 const CustomHeader = ({ navigation }) => {
-  const routeNames = ['HOME']; // Lista dei nomi delle route
+  const routeNames = ['Home']; // Lista dei nomi delle route
   const currentRouteName = useNavigationState(state => state.routes[state.index]?.name);
 
   return (
@@ -22,9 +23,9 @@ const CustomHeader = ({ navigation }) => {
         <TouchableOpacity
           key={routeName}
           onPress={() => navigation.navigate(routeName)}
-          style={[styles.headerButton, currentRouteName === routeName && styles.activeButton]}
+          style={[styles.headerButton, currentRouteName === routeName]}
         >
-          <Text style={[styles.headerText, currentRouteName === routeName && styles.activeText]}>
+          <Text style={[styles.headerText, currentRouteName === routeName]}>
             <Icon name="home-circle" size={60} color="white" />
 
           </Text>
@@ -43,17 +44,18 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Menu"
+        initialRouteName="Home"
         screenOptions={{
           header: ({ navigation }) => <CustomHeader navigation={navigation} />,
           headerStyle: {
-            backgroundColor: '#f8f9fa', // Colore dello sfondo dell'header
+            backgroundColor: '#f8f9fa', // Colored dello sfondo dell'header
           },
           headerTitleStyle: {
             fontWeight: 'bold', // Testo in grassetto
           },
         }}
       >
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Menu" component={MenuScreen} />
         <Stack.Screen name="Game" component={GameScreen} />
         <Stack.Screen name="Victory" component={VictoryScreen} />
