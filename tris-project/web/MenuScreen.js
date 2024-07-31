@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import RNPickerSelect from 'react-native-picker-select';
 
 export default function MenuScreen({ navigation }) {
   const [player1, setPlayer1] = useState('');
@@ -9,13 +10,33 @@ export default function MenuScreen({ navigation }) {
   const [gameMode, setGameMode] = useState('scegli-la-modalita');
   const [difficulty, setDifficulty] = useState('easy');
 
+  useEffect(() => {
+    console.log(gameMode);
+    if(gameMode === undefined) {
+      alert('Per favore, scegli la modalità di gioco.');
+      return;
+    }
+  
+}, [gameMode]);
+
   const handleSubmit = () => {
-    if (player1 === '') {
+    if (player1 === '' && gameMode) {
       Alert.alert('Errore', 'Per favore, inserisci il nome del Giocatore 1.');
       return;
     }
 
+    if (player2 === '' && gameMode === 'player-vs-player') {
+      Alert.alert('Errore', 'Per favore, inserisci il nome del Giocatore 2.');
+      return;
+    }
+
     const player2Name = gameMode === 'player-vs-computer' ? 'Computer' : player2;
+
+    if (gameMode === 'player-vs-computer' && difficulty === 'scegli-la-difficolta') {
+      Alert.alert('Errore', 'Per favore, scegli la difficoltà.');
+      return;
+    }
+    
     navigation.navigate('Game', { player1, player2: player2Name, mode: gameMode, difficulty });
   };
 
@@ -31,17 +52,19 @@ export default function MenuScreen({ navigation }) {
             <Text style={styles.title}>Gioco del Tris</Text>
             <View style={styles.formGroup}>
               <Text style={styles.label}>Modalità di Gioco</Text>
-              <Picker
+              <RNPickerSelect
                 selectedValue={gameMode}
                 style={styles.picker}
+                placeholder={{ label: 'Scegli la Modalità', value: 'scegli-la-modalita' }}
                 onValueChange={(itemValue) => setGameMode(itemValue)}
+                items={[
+                  {label:"Giocatore vs Giocatore", value:"player-vs-player"  },
+                  {label:"Giocatore vs Computer", value:"player-vs-computer"  },
+                ]}
               >
-                <Picker.Item label="Scegli la Modalità" value="scegli-la-modalita" />
-                <Picker.Item label="Giocatore vs Giocatore" value="player-vs-player" />
-                <Picker.Item label="Giocatore vs Computer" value="player-vs-computer" />
-              </Picker>
+              </RNPickerSelect>
             </View>
-            {gameMode !== 'scegli-la-modalita' && (
+            { gameMode !== 'scegli-la-modalita' && (
               <>
                 <View style={styles.formGroup}>
                   <Text style={styles.label}>Nome Giocatore 1</Text>
@@ -66,15 +89,19 @@ export default function MenuScreen({ navigation }) {
                 {gameMode === 'player-vs-computer' && (
                   <View style={styles.formGroup}>
                     <Text style={styles.label}>Difficoltà</Text>
-                    <Picker
+                    <RNPickerSelect
                       selectedValue={difficulty}
                       style={styles.picker}
                       onValueChange={(itemValue) => setDifficulty(itemValue)}
+                      placeholder={{ label: 'Scegli la Difficoltà', value: 'scegli-la-difficolta' }}
+
+                      items={[
+                        {label:"Facile", value:"easy"  },
+                        {label:"Medio", value:"medium"  },
+                        {label:"Difficile", value:"hard"  },
+                      ]}
                     >
-                      <Picker.Item label="Facile" value="easy" />
-                      <Picker.Item label="Medio" value="medium" />
-                      <Picker.Item label="Difficile" value="hard" />
-                    </Picker>
+                                          </RNPickerSelect>
                   </View>
                 )}
                 <Button title="Inizia il Gioco" onPress={handleSubmit} color="#0072ff" />
