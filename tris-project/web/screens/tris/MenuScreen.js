@@ -41,7 +41,7 @@ export default function MenuScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView  style={styles.wrapper} >
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: 'linear-gradient(to right, #00c6ff, #0072ff)',
-    justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
   },
@@ -159,5 +158,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9f9f9',
     borderColor: '#ccc',
     borderRadius: 8,
+  },
+  wrapper: {
+    flex: 1,
+    
   },
 });
