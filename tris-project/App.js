@@ -3,11 +3,16 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { NavigationContainer, useNavigationState } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// Schermate di esempio
-import MenuScreen from './web/screens/tris/MenuScreen';
-import GameScreen from './web/screens/tris/GameScreen';
+//MENU
 import HomeScreen from './web/screens/home/HomeScreen';
-import VictoryScreen from './web/screens/tris/VictoryScreen';
+//TRIS
+import MenuTris from './web/screens/tris/MenuTris';
+import GameTris from './web/screens/tris/GameTris';
+import VictoryTris from './web/screens/tris/VictoryTris';
+//MEMORY
+import MenuMemory from './web/screens/memory/MenuMemory';
+import GameMemory from './web/screens/memory/GameMemory';
+import VictoryMemory from './web/screens/memory/VictoryMemory';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
@@ -56,9 +61,12 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Menu" component={MenuScreen} />
-        <Stack.Screen name="Game" component={GameScreen} />
-        <Stack.Screen name="Victory" component={VictoryScreen} />
+        <Stack.Screen name="MenuTris" component={MenuTris} />
+        <Stack.Screen name="GameTris" component={GameTris} />
+        <Stack.Screen name="VictoryTris" component={VictoryTris} />
+        <Stack.Screen name="MenuMemory" component={MenuMemory} />
+        <Stack.Screen name="GameMemory" component={GameMemory} />
+        <Stack.Screen name="VictoryMemory" component={VictoryMemory} />
       </Stack.Navigator>
     </NavigationContainer>
   );

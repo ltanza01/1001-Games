@@ -1,20 +1,20 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-export default function VictoryScreen({ route, navigation }) {
+export default function VictoryTris({ route, navigation }) {
   const { winner, player1, player2, mode, difficulty } = route.params;
 
   const handleNewGame = () => {
-    navigation.navigate('Menu');
+    navigation.navigate('MenuMemory');
   };
 
   const handleRestartGame = () => {
-    navigation.navigate('Game', {
+    navigation.navigate('GameMemory', {
       player1,
       player2,
       mode,
       difficulty,
-      restart: true // Indica che questa è una richiesta di riavvio del gioco
+      restart: true
     });
   };
 

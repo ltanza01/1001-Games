@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import RNPickerSelect from 'react-native-picker-select';
 
-export default function MenuScreen({ navigation }) {
+export default function MenuTris({ navigation }) {
   const [player1, setPlayer1] = useState('');
   const [player2, setPlayer2] = useState('');
   const [gameMode, setGameMode] = useState('scegli-la-modalita');

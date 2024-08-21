@@ -8,7 +8,7 @@ const games = [
     description: 'Un classico gioco del tris per 1/2 giocatori.',
     minPlayers: 1,
     maxPlayers: 2,
-    route :'Menu',
+    route :'MenuTris',
     image: 'https://images.unsplash.com/photo-1668901382969-8c73e450a1f5?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Immagine di esempio
   },
   {
@@ -16,8 +16,8 @@ const games = [
     title: 'Memory',
     description: 'Un gioco di memoria per tutti.',
     minPlayers: 1,
-    maxPlayers: 4,
-    route :undefined,
+    maxPlayers: 2,
+    route :'MenuMemory',
     image: 'https://images.unsplash.com/photo-1529480653440-0e5fd1af911c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fGNhcmRzJTIwZ2FtZXxlbnwwfHwwfHx8MA%3D%3D', // Immagine di esempio
   },
   {

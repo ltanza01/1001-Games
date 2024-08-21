@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
-export default function GameScreen({ route, navigation }) {
+export default function GameTris({ route, navigation }) {
   const { player1, player2, mode, difficulty, restart } = route.params;
   const [board, setBoard] = useState(Array(9).fill(''));
   const [currentPlayer, setCurrentPlayer] = useState('X');
