@@ -15,7 +15,8 @@ export default function App() {
     async function loadAndPlay() {
       if (soundRef.current) return;
       const { sound } = await Audio.Sound.createAsync(
-        require('./web/assets/pierino-sigla.mp3'), 
+        //require('./web/assets/pierino-sigla.mp3'), //Audio Pierino per le Gag
+        require('./web/assets/background-music.mp3'), // Audio Reale
         { isLooping: true, volume: 1 }
       );
       if (isMounted) {
