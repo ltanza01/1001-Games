@@ -83,7 +83,6 @@ export default function App() {
         <Stack.Screen name="GameBattleship" component={GameBattleship} />
         <Stack.Screen name="VictoryBattleship" component={VictoryBattleship} />
       </Stack.Navigator>
-      {/* Firma sviluppatore */}
       <View
         style={{
           position: 'absolute',
