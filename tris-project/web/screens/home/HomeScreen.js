@@ -67,6 +67,34 @@ const HomeScreen = ({ navigation }) => {
           numColumns={2}
           columnWrapperStyle={styles.row}
         />
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 30,
+            left: 0,
+            right: 0,
+            alignItems: 'center',
+            zIndex: 999,
+          }}
+          pointerEvents="auto"
+        >
+          <TouchableOpacity onPress={() => navigation.navigate('Riconoscimenti')}>
+            <Text
+              style={{
+                fontSize: 16,
+                color: '#0072ff',
+                fontWeight: 'bold',
+                letterSpacing: 1,
+                textShadowColor: '#fff',
+                textShadowOffset: { width: 1, height: 1 },
+                textShadowRadius: 2,
+                opacity: 0.85,
+              }}
+            >
+              Riconoscimenti
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
