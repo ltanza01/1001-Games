@@ -5,9 +5,9 @@ import styles from './BattleshipStyles';
 
 // Definizione delle navi standard
 const SHIPS = [
-  { name: 'Portaerei', size: 5, count: 0 },
-  { name: 'Corazzata', size: 4, count: 0 },
-  { name: 'Incrociatore', size: 3, count: 0 },
+  { name: 'Portaerei', size: 5, count: 1 },
+  { name: 'Corazzata', size: 4, count: 1 },
+  { name: 'Incrociatore', size: 3, count: 2 },
   { name: 'Cacciatorpediniere', size: 2, count: 1 },
 ];
 
@@ -108,6 +108,9 @@ export default function BattleshipGameScreen({ route, navigation }) {
   const [isPlacingWait, setIsPlacingWait] = useState(false);
   const [placingWaitSeconds, setPlacingWaitSeconds] = useState(3);
 
+  // Stato per il ripristino nave rimossa
+  const [pendingShipId, setPendingShipId] = useState([null, null]);
+
   // Gestione piazzamento/rimozione nave
   const handlePlace = (x, y) => {
     if (placing.done[placing.player]) return;
@@ -127,34 +130,31 @@ export default function BattleshipGameScreen({ route, navigation }) {
       const updatedShips = [...ships];
       updatedShips[placing.player] = newShips;
 
-      // Trova la posizione della nave rimossa nella lista delle navi da piazzare
+      // Trova la posizione della prima nave non ancora piazzata
       const shipsList = getShipsList();
-      // Conta quante navi di ogni tipo sono già state piazzate (dopo la rimozione)
       const typeCounts = {};
       for (const s of newShips) {
         const key = `${s.name}_${s.size}`;
         typeCounts[key] = (typeCounts[key] || 0) + 1;
       }
-      // Trova la prima nave di quel tipo che non è stata ancora piazzata
       let idx = 0;
-      let found = false;
       for (; idx < shipsList.length; idx++) {
         const key = `${shipsList[idx].name}_${shipsList[idx].size}`;
-        if (shipsList[idx].name === shipToRemove.name && shipsList[idx].size === shipToRemove.size) {
-          if ((typeCounts[key] || 0) === 0) {
-            found = true;
-            break;
-          } else {
-            typeCounts[key]--;
-          }
+        if ((typeCounts[key] || 0) > 0) {
+          typeCounts[key]--;
+        } else {
+          break;
         }
       }
-      // Se non trovata, fallback su shipIndex 0
       setBoards(updatedBoards);
       setShips(updatedShips);
+      // Salva il shipId da riutilizzare
+      const newPendingShipId = [...pendingShipId];
+      newPendingShipId[placing.player] = shipId;
+      setPendingShipId(newPendingShipId);
       setPlacing({
         ...placing,
-        shipIndex: found ? idx : 0,
+        shipIndex: idx,
       });
       return;
     }
@@ -164,7 +164,8 @@ export default function BattleshipGameScreen({ route, navigation }) {
       Alert.alert('Posizionamento non valido', 'Non puoi posizionare la nave qui.');
       return;
     }
-    const shipId = currentShips.length;
+    // Usa pendingShipId se presente, altrimenti currentShips.length
+    const shipId = pendingShipId[placing.player] !== null ? pendingShipId[placing.player] : currentShips.length;
     const newBoard = placeShip(currentBoard, x, y, shipDef.size, placing.orientation, shipId);
     const newShips = [
       ...currentShips,
@@ -181,6 +182,13 @@ export default function BattleshipGameScreen({ route, navigation }) {
     updatedBoards[placing.player] = newBoard;
     const updatedShips = [...ships];
     updatedShips[placing.player] = newShips;
+
+    // Reset pendingShipId dopo averlo usato
+    if (pendingShipId[placing.player] !== null) {
+      const newPendingShipId = [...pendingShipId];
+      newPendingShipId[placing.player] = null;
+      setPendingShipId(newPendingShipId);
+    }
 
     // Passa alla prossima nave o al prossimo giocatore
     let nextShipIndex = placing.shipIndex + 1;
@@ -270,8 +278,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
         winner: turn === 0 ? player1 : player2,
         player1,
         player2,
-        mode: undefined, // Puoi aggiungere la variabile mode se la usi
-        difficulty: undefined // Puoi aggiungere la variabile difficulty se la usi
+        boardSize: boardSize, 
       });
       return;
     }

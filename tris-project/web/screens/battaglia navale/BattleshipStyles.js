@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   victoryButtonText: {
     color: '#fff',
     fontSize: 16,
+    textAlign: 'center',
   }
 });
 

@@ -3,18 +3,17 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styles from './BattleshipStyles.js';
 
 export default function BattleshipVictory({ route, navigation }) {
-  const { winner, player1, player2, mode, difficulty } = route.params;
+  const { winner, player1, player2, boardSize } = route.params;
 
   const handleNewGame = () => {
     navigation.navigate('MenuBattleship');
   };
 
-  const handleRestartGame = () => {
+ const handleRestartGame = () => {
     navigation.navigate('GameBattleship', {
       player1,
       player2,
-      mode,
-      difficulty,
+      boardSize,
       restart: true
     });
   };
