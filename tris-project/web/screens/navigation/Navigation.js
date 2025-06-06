@@ -83,6 +83,33 @@ export default function App() {
         <Stack.Screen name="GameBattleship" component={GameBattleship} />
         <Stack.Screen name="VictoryBattleship" component={VictoryBattleship} />
       </Stack.Navigator>
+      {/* Firma sviluppatore */}
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 30,
+          left: 0,
+          right: 0,
+          alignItems: 'center',
+          zIndex: 999,
+        }}
+        pointerEvents="none"
+      >
+        <Text
+          style={{
+            fontSize: 16,
+            color: '#0072ff',
+            fontWeight: 'bold',
+            letterSpacing: 1,
+            textShadowColor: '#fff',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 2,
+            opacity: 0.85,
+          }}
+        >
+          App pensata e sviluppata da Tanza®
+        </Text>
+      </View>
     </NavigationContainer>
   );
 }
