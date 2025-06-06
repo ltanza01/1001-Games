@@ -1,70 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import React, { useState, useCallback } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import RNPickerSelect from 'react-native-picker-select';
+import DropDownPicker from 'react-native-dropdown-picker';
+import styles from './TrisStyles';
 
 export default function MenuTris({ navigation }) {
   const [player1, setPlayer1] = useState('');
   const [player2, setPlayer2] = useState('');
-  const [gameMode, setGameMode] = useState('scegli-la-modalita');
-  const [difficulty, setDifficulty] = useState('easy');
+  const [gameMode, setGameMode] = useState('');
+  const [difficulty, setDifficulty] = useState('');
 
-  useEffect(() => {
-    console.log(gameMode);
-    if(gameMode === undefined) {
-      alert('Per favore, scegli la modalità di gioco.');
-      return;
-    }
-  
-}, [gameMode]);
+  // Dropdown Picker states
+  const [modeOpen, setModeOpen] = useState(false);
+  const [modeItems, setModeItems] = useState([
+    { label: 'Giocatore vs Giocatore', value: 'player-vs-player' },
+    { label: 'Giocatore vs Computer', value: 'player-vs-computer' },
+  ]);
+
+  const [difficultyOpen, setDifficultyOpen] = useState(false);
+  const [difficultyItems, setDifficultyItems] = useState([
+    { label: 'Facile', value: 'easy' },
+    { label: 'Medio', value: 'medium' },
+    { label: 'Difficile', value: 'hard' },
+  ]);
+
+  // Chiudi dropdown se l'altro si apre
+  const onModeOpen = useCallback(() => {
+    setDifficultyOpen(false);
+  }, []);
+
+  const onDifficultyOpen = useCallback(() => {
+    setModeOpen(false);
+  }, []);
 
   const handleSubmit = () => {
-    if (player1 === '' && gameMode) {
+    if (player1.trim() === '') {
       Alert.alert('Errore', 'Per favore, inserisci il nome del Giocatore 1.');
       return;
     }
 
-    if (player2 === '' && gameMode === 'player-vs-player') {
+    if (gameMode === '') {
+      Alert.alert('Errore', 'Per favore, scegli la modalità di gioco.');
+      return;
+    }
+
+    if (gameMode === 'player-vs-player' && player2.trim() === '') {
       Alert.alert('Errore', 'Per favore, inserisci il nome del Giocatore 2.');
       return;
     }
 
-    const player2Name = gameMode === 'player-vs-computer' ? 'Computer' : player2;
-
-    if (gameMode === 'player-vs-computer' && difficulty === 'scegli-la-difficolta') {
+    if (gameMode === 'player-vs-computer' && difficulty === '') {
       Alert.alert('Errore', 'Per favore, scegli la difficoltà.');
       return;
     }
-    
-    navigation.navigate('Game', { player1, player2: player2Name, mode: gameMode, difficulty });
+
+    const player2Name = gameMode === 'player-vs-computer' ? 'Computer' : player2;
+    navigation.navigate('GameTris', {
+      player1,
+      player2: player2Name,
+      mode: gameMode,
+      difficulty,
+    });
   };
 
   return (
-    <SafeAreaView  style={styles.wrapper} >
+    <SafeAreaView style={styles.wrapper}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={100}
       >
-        <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
           <View style={styles.menu}>
             <Text style={styles.title}>Gioco del Tris</Text>
+
             <View style={styles.formGroup}>
               <Text style={styles.label}>Modalità di Gioco</Text>
-              <RNPickerSelect
-                selectedValue={gameMode}
-                style={styles.picker}
-                placeholder={{ label: 'Scegli la Modalità', value: 'scegli-la-modalita' }}
-                onValueChange={(itemValue) => setGameMode(itemValue)}
-                items={[
-                  {label:"Giocatore vs Giocatore", value:"player-vs-player"  },
-                  {label:"Giocatore vs Computer", value:"player-vs-computer"  },
-                ]}
-              >
-              </RNPickerSelect>
+              <DropDownPicker
+                open={modeOpen}
+                value={gameMode}
+                items={modeItems}
+                setOpen={setModeOpen}
+                setValue={setGameMode}
+                setItems={setModeItems}
+                placeholder="Scegli la Modalità"
+                style={styles.dropdown}
+                dropDownContainerStyle={styles.dropdownContainer}
+                zIndex={3000}
+                zIndexInverse={1000}
+                onOpen={onModeOpen}
+              />
             </View>
-            { gameMode !== 'scegli-la-modalita' && (
+
+            {gameMode !== '' && (
               <>
                 <View style={styles.formGroup}>
                   <Text style={styles.label}>Nome Giocatore 1</Text>
@@ -75,6 +111,7 @@ export default function MenuTris({ navigation }) {
                     placeholder="Nome Giocatore 1"
                   />
                 </View>
+
                 {gameMode === 'player-vs-player' && (
                   <View style={styles.formGroup}>
                     <Text style={styles.label}>Nome Giocatore 2</Text>
@@ -86,81 +123,33 @@ export default function MenuTris({ navigation }) {
                     />
                   </View>
                 )}
+
                 {gameMode === 'player-vs-computer' && (
                   <View style={styles.formGroup}>
                     <Text style={styles.label}>Difficoltà</Text>
-                    <RNPickerSelect
-                      selectedValue={difficulty}
-                      style={styles.picker}
-                      onValueChange={(itemValue) => setDifficulty(itemValue)}
-                      placeholder={{ label: 'Scegli la Difficoltà', value: 'scegli-la-difficolta' }}
-
-                      items={[
-                        {label:"Facile", value:"easy"  },
-                        {label:"Medio", value:"medium"  },
-                        {label:"Difficile", value:"hard"  },
-                      ]}
-                    >
-                                          </RNPickerSelect>
+                    <DropDownPicker
+                      open={difficultyOpen}
+                      value={difficulty}
+                      items={difficultyItems}
+                      setOpen={setDifficultyOpen}
+                      setValue={setDifficulty}
+                      setItems={setDifficultyItems}
+                      placeholder="Scegli la Difficoltà"
+                      style={styles.dropdown}
+                      dropDownContainerStyle={styles.dropdownContainer}
+                      zIndex={2000}
+                      zIndexInverse={1000}
+                      onOpen={onDifficultyOpen}
+                    />
                   </View>
                 )}
+
                 <Button title="Inizia il Gioco" onPress={handleSubmit} color="#0072ff" />
               </>
             )}
           </View>
-        </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: 'linear-gradient(to right, #00c6ff, #0072ff)',
-    alignItems: 'center',
-    paddingVertical: 20,
-  },
-  menu: {
-    backgroundColor: '#ffffff',
-    borderRadius: 15,
-    boxShadow: '0 12px 24px rgba(0, 0, 0, 0.3)',
-    width: '90%',
-    padding: 30,
-    textAlign: 'center',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  formGroup: {
-    marginBottom: 15,
-  },
-  label: {
-    fontSize: 18,
-    color: '#555',
-    marginBottom: 8,
-  },
-  input: {
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-    padding: 12,
-    borderRadius: 8,
-    width: '100%',
-    boxSizing: 'border-box',
-    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
-  },
-  picker: {
-    width: '100%',
-    backgroundColor: '#f9f9f9',
-    borderColor: '#ccc',
-    borderRadius: 8,
-  },
-  wrapper: {
-    flex: 1,
-    
-  },
-});

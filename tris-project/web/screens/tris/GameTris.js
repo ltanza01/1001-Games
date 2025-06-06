@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import styles from './TrisStyles.js';
 export default function GameTris({ route, navigation }) {
   const { player1, player2, mode, difficulty, restart } = route.params;
   const [board, setBoard] = useState(Array(9).fill(''));
@@ -21,7 +21,7 @@ export default function GameTris({ route, navigation }) {
   const updateTurnDisplay = () => {
     if (isGameOver) return;
     const currentName = currentPlayer === 'X' ? player1 : player2;
-    // Alert.alert('Turno', `È il turno di ${currentName}`);
+     //Alert.alert('Turno', `È il turno di ${currentName}`);
   };
 
   const handleClick = (index) => {
@@ -33,7 +33,7 @@ export default function GameTris({ route, navigation }) {
 
     if (checkWin(newBoard)) {
       const winner = currentPlayer === 'X' ? player1 : player2;
-      navigation.navigate('Victory', {
+      navigation.navigate('VictoryTris', {
         winner,
         player1,
         player2,
@@ -79,7 +79,7 @@ export default function GameTris({ route, navigation }) {
 
     if (checkWin(newBoard)) {
       const winnerName = 'Computer';
-      navigation.navigate('Victory', { winner: winnerName, player1, player2, mode, difficulty });
+      navigation.navigate('VictoryTris', { winner: winnerName, player1, player2, mode, difficulty });
       setIsGameOver(true);
     } else if (newBoard.every(cell => cell !== '')) {
       Alert.alert('Pareggio!');
@@ -143,7 +143,7 @@ export default function GameTris({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.gameContainer}>
       <Text style={styles.turnIndicator}>{`È il turno di ${currentPlayer === 'X' ? player1 : player2}`}</Text>
       <View style={styles.board}>
         {board.map((cell, index) => (
@@ -161,59 +161,9 @@ export default function GameTris({ route, navigation }) {
       <TouchableOpacity style={styles.button} onPress={resetGame}>
         <Text style={styles.buttonText}>Reset Griglia</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Menu')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MenuTris')}>
         <Text style={styles.buttonText}>Torna al Menu</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'linear-gradient(to right, #00c6ff, #0072ff)',
-  },
-  turnIndicator: {
-    fontSize: 18,
-    marginBottom: 20,
-    color: '#555',
-  },
-  board: {
-    width: '100%',
-    aspectRatio: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 20,
-  },
-  cell: {
-    width: '33.33%',
-    height: '33.33%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  cellText: {
-    fontSize: 32,
-  },
-  textX: {
-    color: '#c2061f',
-  },
-  textO: {
-    color: '#0297e9',
-  },
-  button: {
-    padding: 14,
-    marginTop: 10,
-    backgroundColor: '#0072ff',
-    borderRadius: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});

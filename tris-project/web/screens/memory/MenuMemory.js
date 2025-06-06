@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import React, { useState, useCallback } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import DropDownPicker from 'react-native-dropdown-picker';
+import styles from './MemoryStyles';
 
 export default function MemoryMenuScreen({ navigation }) {
   const [player1, setPlayer1] = useState('');
@@ -9,25 +18,49 @@ export default function MemoryMenuScreen({ navigation }) {
   const [gameMode, setGameMode] = useState(null);
   const [difficulty, setDifficulty] = useState(null);
 
+  const [modeOpen, setModeOpen] = useState(false);
+  const [modeItems, setModeItems] = useState([
+    { label: 'Giocatore vs Giocatore', value: 'player-vs-player' },
+    { label: 'Giocatore vs Computer', value: 'player-vs-computer' },
+  ]);
+
+  const [diffOpen, setDiffOpen] = useState(false);
+  const [diffItems, setDiffItems] = useState([
+    { label: 'Facile', value: 'easy' },
+    { label: 'Medio', value: 'medium' },
+    { label: 'Difficile', value: 'hard' },
+  ]);
+
+  const onModeOpen = useCallback(() => setDiffOpen(false), []);
+  const onDiffOpen  = useCallback(() => setModeOpen(false), []);
+
   const handleSubmit = () => {
-    if (player1 === '') {
+    if (player1.trim() === '') {
       Alert.alert('Errore', 'Per favore, inserisci il nome del Giocatore 1.');
       return;
     }
-
-    if (gameMode === 'player-vs-player' && player2 === '') {
+    if (!gameMode) {
+      Alert.alert('Errore', 'Per favore, scegli la modalità di gioco.');
+      return;
+    }
+    if (gameMode === 'player-vs-player' && player2.trim() === '') {
       Alert.alert('Errore', 'Per favore, inserisci il nome del Giocatore 2.');
       return;
     }
-
-    const player2Name = gameMode === 'player-vs-computer' ? 'Computer' : player2;
-
-    if (gameMode === 'player-vs-computer' && difficulty === null) {
+    if (gameMode === 'player-vs-computer' && !difficulty) {
       Alert.alert('Errore', 'Per favore, scegli la difficoltà.');
       return;
     }
 
-    navigation.navigate('GameMemory', { player1, player2: player2Name, mode: gameMode, difficulty });
+    const player2Name =
+      gameMode === 'player-vs-computer' ? 'Computer' : player2;
+
+    navigation.navigate('GameMemory', {
+      player1,
+      player2: player2Name,
+      mode: gameMode,
+      difficulty,
+    });
   };
 
   return (
@@ -37,23 +70,31 @@ export default function MemoryMenuScreen({ navigation }) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={100}
       >
-        <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
           <View style={styles.menu}>
             <Text style={styles.title}>Gioco del Memory</Text>
+
             <View style={styles.formGroup}>
               <Text style={styles.label}>Modalità di Gioco</Text>
-              <RNPickerSelect
-                selectedValue={gameMode}
-                style={styles.picker}
-                onValueChange={(itemValue) => setGameMode(itemValue)}
-                items={[
-                  { label: "Giocatore vs Giocatore", value: "player-vs-player" },
-                  { label: "Giocatore vs Computer", value: "player-vs-computer" },
-                ]}
+              <DropDownPicker
+                open={modeOpen}
+                value={gameMode}
+                items={modeItems}
+                setOpen={setModeOpen}
+                setValue={setGameMode}
+                setItems={setModeItems}
+                placeholder="Scegli la Modalità"
+                style={styles.dropdown}
+                dropDownContainerStyle={styles.dropdownContainer}
+                zIndex={3000}
+                zIndexInverse={1000}
+                onOpen={onModeOpen}
               />
             </View>
+
             {gameMode && (
               <>
+                {/* Giocatore 1 */}
                 <View style={styles.formGroup}>
                   <Text style={styles.label}>Nome Giocatore 1</Text>
                   <TextInput
@@ -63,6 +104,7 @@ export default function MemoryMenuScreen({ navigation }) {
                     placeholder="Nome Giocatore 1"
                   />
                 </View>
+
                 {gameMode === 'player-vs-player' && (
                   <View style={styles.formGroup}>
                     <Text style={styles.label}>Nome Giocatore 2</Text>
@@ -74,74 +116,37 @@ export default function MemoryMenuScreen({ navigation }) {
                     />
                   </View>
                 )}
+
                 {gameMode === 'player-vs-computer' && (
                   <View style={styles.formGroup}>
                     <Text style={styles.label}>Difficoltà</Text>
-                    <RNPickerSelect
-                      selectedValue={difficulty}
-                      style={styles.picker}
-                      onValueChange={(itemValue) => setDifficulty(itemValue)}
-                      items={[
-                        { label: "Facile", value: "easy" },
-                        { label: "Medio", value: "medium" },
-                        { label: "Difficile", value: "hard" },
-                      ]}
+                    <DropDownPicker
+                      open={diffOpen}
+                      value={difficulty}
+                      items={diffItems}
+                      setOpen={setDiffOpen}
+                      setValue={setDifficulty}
+                      setItems={setDiffItems}
+                      placeholder="Scegli la Difficoltà"
+                      style={styles.dropdown}
+                      dropDownContainerStyle={styles.dropdownContainer}
+                      zIndex={2000}
+                      zIndexInverse={1000}
+                      onOpen={onDiffOpen}
                     />
                   </View>
                 )}
-                <Button title="Inizia il Gioco" onPress={handleSubmit} color="#0072ff" />
+
+                <Button
+                  title="Inizia il Gioco"
+                  onPress={handleSubmit}
+                  color="#0072ff"
+                />
               </>
             )}
           </View>
-        </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: '#00c6ff',
-    alignItems: 'center',
-    paddingVertical: 20,
-  },
-  menu: {
-    backgroundColor: '#ffffff',
-    borderRadius: 15,
-    width: '90%',
-    padding: 30,
-    textAlign: 'center',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  formGroup: {
-    marginBottom: 15,
-  },
-  label: {
-    fontSize: 18,
-    color: '#555',
-    marginBottom: 8,
-  },
-  input: {
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-    padding: 12,
-    borderRadius: 8,
-    width: '100%',
-  },
-  picker: {
-    width: '100%',
-    backgroundColor: '#f9f9f9',
-    borderColor: '#ccc',
-    borderRadius: 8,
-  },
-  wrapper: {
-    flex: 1,
-  },
-});

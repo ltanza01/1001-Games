@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, FlatList, Dimensions, Alert } from 'react-native';
-
+import { View, Text, Image, TouchableOpacity, FlatList, Alert } from 'react-native';
+import styles from './HomeStyles.js';
 const games = [
   {
     id: '1',
@@ -26,7 +26,7 @@ const games = [
     description: 'Un gioco strategico per due giocatori.',
     minPlayers: 2,
     maxPlayers: 2,
-    route :undefined,
+    route :'MenuBattleship',
     image: 'https://plus.unsplash.com/premium_photo-1707911993245-273819db3431?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmF0dGFnbGlhJTIwbmF2YWxlJTIwZ2FtZXxlbnwwfHwwfHx8MA%3D%3D', // Immagine di esempio
   },
 ];
@@ -70,49 +70,5 @@ const HomeScreen = ({ navigation }) => {
       </View>
     );
   };
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'white',
-      padding: 10,
-    },
-    row: {
-      justifyContent: 'space-between',
-    },
-    card: {
-      flex: 1,
-      margin: 10,
-      backgroundColor: '#ffffff',
-      borderRadius: 8,
-      overflow: 'hidden',
-      elevation: 2,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-    },
-    cardImage: {
-      width: '100%',
-      height: 150,
-    },
-    cardContent: {
-      padding: 10,
-    },
-    cardTitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginBottom: 5,
-    },
-    cardDescription: {
-      fontSize: 14,
-      color: '#333',
-      marginBottom: 5,
-    },
-    cardPlayers: {
-      fontSize: 12,
-      color: '#888',
-    },
-  });
-  
+
   export default HomeScreen;
