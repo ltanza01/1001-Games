@@ -19,6 +19,10 @@ import VictoryMemory from '../memory/VictoryMemory';
 import GameBattleship from '../battaglia navale/BattleshipGame.js';
 import MenuBattleship from '../battaglia navale/BattleshipMenu.js';
 import VictoryBattleship from '../battaglia navale/BattleshipVictory.js';
+//FLAPPY BIRD
+import GameFlappy from '../flappy-bird/FlappyGame.js';
+import MenuFlappy from '../flappy-bird/FlappyMenu.js';
+import Leaderboard from '../flappy-bird/FlappyScore.js';
 //ALTRI IMPORT
 import styles from './NavigationStyles.js';
 // Importato il contesto della musica
@@ -166,6 +170,9 @@ export default function App() {
         <Stack.Screen name="GameBattleship" component={GameBattleship} />
         <Stack.Screen name="VictoryBattleship" component={VictoryBattleship} />
         <Stack.Screen name="Riconoscimenti" component={Riconoscimenti} />
+        <Stack.Screen name="MenuFlappy" component={MenuFlappy} />
+        <Stack.Screen name="GameFlappy" component={GameFlappy} />
+        <Stack.Screen name="Leaderboard" component={Leaderboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

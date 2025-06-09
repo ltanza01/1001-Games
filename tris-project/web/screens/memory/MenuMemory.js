@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  Button,
   Alert,
+  Button,
   KeyboardAvoidingView,
   Platform,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './MemoryStyles';
 
 export default function MemoryMenuScreen({ navigation }) {
@@ -94,7 +94,6 @@ export default function MemoryMenuScreen({ navigation }) {
 
             {gameMode && (
               <>
-                {/* Giocatore 1 */}
                 <View style={styles.formGroup}>
                   <Text style={styles.label}>Nome Giocatore 1</Text>
                   <TextInput

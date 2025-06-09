@@ -53,7 +53,7 @@ const games = [
     description: 'Un gioco di abilità ispirato al famoso Flappy Bird.', 
     minPlayers: 1,
     maxPlayers: 1,
-    route: null,
+    route: 'MenuFlappy',
     image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Flappy-bird.png?raw=true',
   }
 ];
