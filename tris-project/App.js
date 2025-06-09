@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
 import AppNavigator from './web/screens/navigation/Navigation';
 import { Audio } from 'expo-av';
-import { TouchableOpacity, Text } from 'react-native';
 
 // Context per la musica
 export const MusicContext = createContext();
@@ -43,27 +42,8 @@ export default function App() {
 
   const toggleMute = () => setMuted(m => !m);
 
-  // Overlay mute button in alto a destra
-  const MuteButton = () => (
-    <TouchableOpacity
-      style={{
-        position: 'absolute',
-        top: 40,
-        right: 20,
-        zIndex: 1000,
-        backgroundColor: 'rgba(255,255,255,0.7)',
-        borderRadius: 20,
-        padding: 6,
-      }}
-      onPress={toggleMute}
-    >
-      <Text style={{ fontSize: 26 }}>{muted ? '🔇' : '🔊'}</Text>
-    </TouchableOpacity>
-  );
-
   return (
     <MusicContext.Provider value={{ muted, toggleMute }}>
-      <MuteButton />
       <AppNavigator />
     </MusicContext.Provider>
   );
