@@ -100,7 +100,48 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
-  }
+  },
+  cell: {
+    width: 28,
+    height: 28,
+    margin: 1,
+    borderWidth: 1,
+    borderColor: '#aaa',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cellSmall: {
+    width: 24,
+    height: 24,
+    margin: 1,
+    borderWidth: 1,
+    borderColor: '#aaa',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  board: {
+    marginVertical: 10,
+  },
+  waitContainer: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    alignItems: 'center',
+    elevation: 10,
+  },
+  modalBoard: {
+    marginBottom: 10,
+  },
 });
 
 export default styles;

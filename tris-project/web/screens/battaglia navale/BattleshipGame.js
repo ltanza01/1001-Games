@@ -355,16 +355,10 @@ export default function BattleshipGameScreen({ route, navigation }) {
     return (
       <TouchableOpacity
         key={`${x},${y}`}
-        style={{
-          width: cellSize,
-          height: cellSize,
-          margin: 1,
-          backgroundColor: bg,
-          borderWidth: 1,
-          borderColor: '#aaa',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        style={[
+          cellSize === 24 ? styles.cellSmall : styles.cell,
+          { backgroundColor: bg }
+        ]}
         onPress={onPress}
         disabled={!!winner}
       >
@@ -379,7 +373,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
   // Renderizza la griglia
   function renderBoard(board, onCellPress, showShips = false, cellSize = 28) {
     return (
-      <View style={{ marginVertical: 10 }}>
+      <View style={styles.board}>
         {board.map((row, x) => (
           <View key={x} style={{ flexDirection: 'row' }}>
             {row.map((cell, y) =>
@@ -427,7 +421,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
   if (isWaiting) {
     return (
       <SafeAreaView style={styles.wrapper}>
-        <View style={[styles.container, { justifyContent: 'center', flex: 1 }]}>
+        <View style={[styles.container, styles.waitContainer]}>
           <Text style={[styles.label, { fontSize: 22, marginBottom: 20 }]}>
             Passa il dispositivo a {turn === 0 ? player2 : player1}
           </Text>
@@ -443,7 +437,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
   if (isPlacingWait) {
     return (
       <SafeAreaView style={styles.wrapper}>
-        <View style={[styles.container, { justifyContent: 'center', flex: 1 }]}>
+        <View style={[styles.container, styles.waitContainer]}>
           <Text style={[styles.label, { fontSize: 22, marginBottom: 20 }]}>
             Passa il dispositivo a {placing.player === 0 ? player1 : player2}
           </Text>
@@ -459,7 +453,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
   if (shotResult) {
     return (
       <SafeAreaView style={styles.wrapper}>
-        <View style={[styles.container, { justifyContent: 'center', flex: 1 }]}>
+        <View style={[styles.container, styles.waitContainer]}>
           <Text style={[styles.label, { fontSize: 22, marginBottom: 20 }]}>
             {shotResult}
           </Text>
@@ -496,22 +490,15 @@ export default function BattleshipGameScreen({ route, navigation }) {
           transparent={true}
           onRequestClose={() => setShowOwnBoard(false)}
         >
-          <View style={{
-            flex: 1,
-            backgroundColor: 'rgba(0,0,0,0.7)',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            <View style={{
-              backgroundColor: '#fff',
-              borderRadius: 12,
-              padding: 20,
-              alignItems: 'center',
-              elevation: 10,
-              minWidth: 10 + 20 * boards[turn].length,
-            }}>
+          <View style={styles.modalOverlay}>
+            <View style={[
+              styles.modalContent,
+              { minWidth: 10 + 20 * boards[turn].length }
+            ]}>
               <Text style={[styles.label, { marginBottom: 10 }]}>La tua griglia</Text>
-              {renderBoard(boards[turn], () => {}, true, 24)}
+              <View style={styles.modalBoard}>
+                {renderBoard(boards[turn], () => {}, true, 24)}
+              </View>
               <Button title="Chiudi" onPress={() => setShowOwnBoard(false)} color="#0072ff" />
             </View>
           </View>
