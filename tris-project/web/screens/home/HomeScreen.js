@@ -9,7 +9,7 @@ const games = [
     minPlayers: 1,
     maxPlayers: 2,
     route :'MenuTris',
-    image: 'https://images.unsplash.com/photo-1668901382969-8c73e450a1f5?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Immagine di esempio
+    image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Tictactoe.png?raw=true', 
   },
   {
     id: '2',
@@ -18,7 +18,7 @@ const games = [
     minPlayers: 1,
     maxPlayers: 2,
     route :'MenuMemory',
-    image: 'https://images.unsplash.com/photo-1529480653440-0e5fd1af911c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fGNhcmRzJTIwZ2FtZXxlbnwwfHwwfHx8MA%3D%3D', // Immagine di esempio
+    image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Memory.png?raw=true',
   },
   {
     id: '3',
@@ -27,8 +27,36 @@ const games = [
     minPlayers: 2,
     maxPlayers: 2,
     route :'MenuBattleship',
-    image: 'https://plus.unsplash.com/premium_photo-1707911993245-273819db3431?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmF0dGFnbGlhJTIwbmF2YWxlJTIwZ2FtZXxlbnwwfHwwfHx8MA%3D%3D', // Immagine di esempio
+    image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Battleship.png?raw=true', 
   },
+  {
+    id: '4',
+    title: 'Dama',
+    description: 'Un classico gioco di dama per 2 giocatori.',
+    minPlayers: 1,
+    maxPlayers: 2,
+    route: null,
+    image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Dama.png?raw=true', 
+
+  },
+  {
+    id: '5',
+    title: 'Schacchi',
+    description: 'Un gioco di scacchi per 2 giocatori.',
+    minPlayers: 1,
+    maxPlayers: 2,
+    route: null,
+    image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Chess.png?raw=true'
+  },
+  {
+    id: '6',
+    title: 'Flappy Bird',
+    description: 'Un gioco di abilità ispirato al famoso Flappy Bird.', 
+    minPlayers: 1,
+    maxPlayers: 1,
+    route: null,
+    image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Flappy-bird.png?raw=true',
+  }
 ];
 
 const HomeScreen = ({ navigation }) => {
@@ -67,34 +95,6 @@ const HomeScreen = ({ navigation }) => {
           numColumns={2}
           columnWrapperStyle={styles.row}
         />
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 30,
-            left: 0,
-            right: 0,
-            alignItems: 'center',
-            zIndex: 999,
-          }}
-          pointerEvents="auto"
-        >
-          <TouchableOpacity onPress={() => navigation.navigate('Riconoscimenti')}>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#0072ff',
-                fontWeight: 'bold',
-                letterSpacing: 1,
-                textShadowColor: '#fff',
-                textShadowOffset: { width: 1, height: 1 },
-                textShadowRadius: 2,
-                opacity: 0.85,
-              }}
-            >
-              Riconoscimenti
-            </Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   };
