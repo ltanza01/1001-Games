@@ -41,6 +41,36 @@ const styles = StyleSheet.create({
   trademarkBold: {
     fontWeight: 'bold',
   },
+  image: {
+  width: 120,
+  height: 120,
+  alignSelf: 'center',
+  marginBottom: 20,
+ },
+ overlay: {
+  flex: 1,
+  backgroundColor: 'rgba(0,0,0,0.7)',
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+overlayContent: {
+  backgroundColor: '#fff',
+  borderRadius: 20,
+  padding: 24,
+  alignItems: 'center',
+},
+closeButton: {
+  marginTop: 16,
+  paddingVertical: 8,
+  paddingHorizontal: 24,
+  backgroundColor: '#0072ff',
+  borderRadius: 16,
+},
+closeButtonText: {
+  color: '#fff',
+  fontWeight: 'bold',
+  fontSize: 16,
+},
 });
 
 export default styles;
