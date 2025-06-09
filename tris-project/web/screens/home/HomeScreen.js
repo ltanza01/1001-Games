@@ -1,5 +1,4 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { Alert, FlatList, Image, Linking, Text, TouchableOpacity, View } from 'react-native';
 import styles from './HomeStyles.js';
 const games = [
   {
@@ -59,7 +58,11 @@ const games = [
   }
 ];
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, search = "" }) => {
+    const filteredGames = games.filter(game =>
+      game.title.toLowerCase().includes(search.toLowerCase())
+    );
+
     const renderItem = ({ item }) => (
       <TouchableOpacity
         style={styles.card}
@@ -88,15 +91,34 @@ const HomeScreen = ({ navigation }) => {
   
     return (
       <View style={styles.container}>
-        <FlatList
-          data={games}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-        />
+        {filteredGames.length === 0 ? (
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 40 }}>
+            <Text style={{ fontSize: 18, color: '#555', textAlign: 'center', marginBottom: 12 }}>
+              Nessun gioco trovato.
+            </Text>
+            <Text style={{ fontSize: 16, color: '#555', textAlign: 'center' }}>
+              Hai idee per nuovi giochi? Scrivimi a{" "}
+              <Text
+                style={{ color: '#1976d2', textDecorationLine: 'underline' }}
+                onPress={() => {
+                  Linking.openURL('mailto:tanzarellalorenzo24@gmail.com?subject=Nuovo gioco per il portale');
+                }}
+              >
+                tanzarellalorenzo24@gmail.com
+              </Text>
+            </Text>
+          </View>
+        ) : (
+          <FlatList
+            data={filteredGames}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            columnWrapperStyle={styles.row}
+          />
+        )}
       </View>
     );
   };
 
-  export default HomeScreen;
+export default HomeScreen;

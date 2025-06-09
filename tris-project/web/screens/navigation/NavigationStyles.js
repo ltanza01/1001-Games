@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     textAlign: 'center',
-    paddingTop: 70,
+    paddingTop: 100,
     backgroundColor: '#007bff',
   },
   headerButton: {
@@ -117,6 +117,33 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#e3e8f0',
     marginVertical: 2,
+  },
+  hamburgerButton: {
+    padding: 10,
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f1f3f4',
+    borderRadius: 24,
+    marginTop: 0,
+    paddingHorizontal: 12,
+    width: 260,
+    height: 44,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 18,
+    color: '#222',
+    backgroundColor: 'transparent',
+    paddingVertical: 0,
   },
 });
 

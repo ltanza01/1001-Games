@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   dropdownContainer: {
   borderColor: '#ccc',
-  zIndex: 1000, // aiuta Android
+  zIndex: 1000,
   },
   gameContainer: {
     flex: 1,

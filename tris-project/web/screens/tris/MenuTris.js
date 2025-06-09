@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  Button,
   Alert,
+  Button,
   KeyboardAvoidingView,
   Platform,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './TrisStyles';
 
 export default function MenuTris({ navigation }) {
@@ -18,7 +18,6 @@ export default function MenuTris({ navigation }) {
   const [gameMode, setGameMode] = useState('');
   const [difficulty, setDifficulty] = useState('');
 
-  // Dropdown Picker states
   const [modeOpen, setModeOpen] = useState(false);
   const [modeItems, setModeItems] = useState([
     { label: 'Giocatore vs Giocatore', value: 'player-vs-player' },
