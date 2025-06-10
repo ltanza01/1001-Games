@@ -102,74 +102,100 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   boardWrapper: {
-    borderWidth: 3,
-    borderColor: '#636e72',
-    borderRadius: 16,
-    backgroundColor: '#636e72',
-    width: CELL_SIZE * 8,
+    aspectRatio: 1,
+    width: '98%',
+    maxWidth: 380,
     alignSelf: 'center',
-    marginBottom: 18,
-    overflow: 'hidden',
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.18,
-    shadowRadius: 4,
-    elevation: 5,
+    marginVertical: 10,
+    alignItems: 'center',
+    backgroundColor: '#e5e9f2',
+    borderRadius: 18,
+    shadowColor: '#22223b',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.10,
+    shadowRadius: 8,
+    elevation: 4,
   },
   boardRow: {
     flexDirection: 'row',
   },
   cell: {
-    width: CELL_SIZE,
-    height: CELL_SIZE,
-    alignItems: 'center',
+    width: 44,
+    height: 44,
     justifyContent: 'center',
-    borderRadius: 8,
-    margin: 0,
+    alignItems: 'center',
+    borderRadius: 12,
+    margin: 1.7,
+    overflow: 'hidden',
   },
   cellSelected: {
     borderWidth: 2,
-    borderColor: "#00cec9",
+    borderColor: "#3bc9db",
+    backgroundColor: "#e3fafc",
   },
   cellUnselected: {
     borderWidth: 0,
     borderColor: "transparent",
   },
   darkCell: {
-    backgroundColor: "#2d3436",
+    backgroundColor: "#22223b",
   },
   lightCell: {
-    backgroundColor: "#dfe6e9",
+    backgroundColor: "#f8f9fa",
   },
   pieceN: {
-    width: 26, height: 26, borderRadius: 13,
-    backgroundColor: "#222",
-    borderWidth: 2, borderColor: "#fdcb6e",
-    alignItems: "center", justifyContent: "center"
+    width: 28, height: 28, borderRadius: 14,
+    backgroundColor: "#232946", // grigio/blu notte
+    borderWidth: 2,
+    borderColor: "#b8c1ec",    // bordo chiaro
+    alignItems: "center", justifyContent: "center",
+    shadowColor: "#232946",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.18,
+    shadowRadius: 3,
+    elevation: 2,
   },
   pieceB: {
-    width: 26, height: 26, borderRadius: 13,
-    backgroundColor: "#fff",
-    borderWidth: 2, borderColor: "#0984e3",
-    alignItems: "center", justifyContent: "center"
+    width: 28, height: 28, borderRadius: 14,
+    backgroundColor: "#fff",   // bianco puro
+    borderWidth: 2,
+    borderColor: "#b8c1ec",    // bordo chiaro
+    alignItems: "center", justifyContent: "center",
+    shadowColor: "#b8c1ec",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.13,
+    shadowRadius: 3,
+    elevation: 2,
   },
   pieceNK: {
-    width: 30, height: 30, borderRadius: 15,
-    backgroundColor: "#222",
-    borderWidth: 2, borderColor: "#fdcb6e",
-    alignItems: "center", justifyContent: "center"
+    width: 32, height: 32, borderRadius: 16,
+    backgroundColor: "#232946",
+    borderWidth: 2,
+    borderColor: "#f6c177",    // bordo oro per dama nera
+    alignItems: "center", justifyContent: "center",
+    shadowColor: "#232946",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.22,
+    shadowRadius: 4,
+    elevation: 3,
   },
   pieceBK: {
-    width: 30, height: 30, borderRadius: 15,
+    width: 32, height: 32, borderRadius: 16,
     backgroundColor: "#fff",
-    borderWidth: 2, borderColor: "#0984e3",
-    alignItems: "center", justifyContent: "center"
+    borderWidth: 2,
+    borderColor: "#f6c177",    // bordo oro per dama bianca
+    alignItems: "center", justifyContent: "center",
+    shadowColor: "#b8c1ec",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.18,
+    shadowRadius: 4,
+    elevation: 3,
   },
   pieceNKText: {
-    color: "#fdcb6e", fontSize: 18, fontWeight: "bold"
+    color: "#f6c177", fontSize: 18, fontWeight: "bold"
   },
   pieceBKText: {
-    color: "#0984e3", fontSize: 18, fontWeight: "bold"
+    color: "#f6c177", fontSize: 18, fontWeight: "bold"
   },
   turnBox: {
     marginTop: 12,
