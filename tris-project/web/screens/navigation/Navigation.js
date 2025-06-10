@@ -1,3 +1,34 @@
+/**
+ * Navigation.js – Documentazione
+ *
+ * Questo file definisce la struttura di navigazione principale dell'applicazione tramite React Navigation.
+ * Utilizza uno Stack Navigator per gestire la transizione tra le varie schermate dei giochi, menu, riconoscimenti e leaderboard.
+ *
+ * ---
+ *
+ * Componenti principali:
+ * - CustomHeader: Header personalizzato con menu laterale, barra di ricerca (solo in Home) e controllo della musica.
+ * - Stack.Navigator: Definisce tutte le schermate navigabili dell'app, tra cui Home, menu e gioco di ogni modalità, schermate di vittoria, riconoscimenti e leaderboard.
+ *
+ * Schermate gestite:
+ * - HomeScreen: Schermata principale con la lista dei giochi.
+ * - Menu/Game/Victory per Tris, Memory, Battaglia Navale, Dama, Flappy Bird.
+ * - Riconoscimenti e Leaderboard.
+ *
+ * Funzionalità aggiuntive:
+ * - Barra di ricerca per filtrare i giochi nella Home.
+ * - Menu laterale accessibile da ogni schermata per navigazione rapida, riconoscimenti e controllo musica.
+ * - Gestione del contesto musicale tramite MusicContext.
+ *
+ * Note aggiuntive:
+ * - Gli stili sono definiti in NavigationStyles.js.
+ * - Tutta la logica di navigazione è centralizzata in questo file.
+ * - Il componente App esportato è il punto di ingresso della navigazione dell'app.
+ *
+ * In sintesi:
+ * Gestisce la navigazione globale dell'app, permettendo di spostarsi tra tutte le schermate di gioco e di servizio.
+ */
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useContext, useState } from 'react';
