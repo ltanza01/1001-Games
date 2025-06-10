@@ -1,5 +1,39 @@
 import { Alert, FlatList, Image, Linking, Text, TouchableOpacity, View } from 'react-native';
 import styles from './HomeStyles.js';
+
+/**
+ * HomeScreen – Documentazione
+ *
+ * Questo componente React Native rappresenta la schermata principale dell'applicazione,
+ * mostrando una lista di giochi disponibili con immagini, descrizione e numero di giocatori supportati.
+ * Permette la ricerca dei giochi tramite una stringa di ricerca e la navigazione verso il menu di ciascun gioco.
+ *
+ * ---
+ *
+ * Stati e dati principali:
+ * - games: Array di oggetti che rappresentano i giochi disponibili (id, titolo, descrizione, giocatori, route, immagine).
+ * - search: Stringa di ricerca per filtrare i giochi (prop opzionale).
+ *
+ * Funzioni principali:
+ * - renderItem(): Renderizza la card di ciascun gioco con immagine, titolo, descrizione e numero di giocatori.
+ * - Se il gioco è selezionabile (route presente), naviga al menu corrispondente; altrimenti mostra un alert.
+ *
+ * UI:
+ * - FlatList: Visualizza la lista dei giochi in una griglia a due colonne.
+ * - Card: Ogni gioco è rappresentato da una card con immagine e dettagli.
+ * - Messaggio personalizzato se nessun gioco corrisponde alla ricerca, con link per suggerire nuovi giochi via email.
+ *
+ * Navigazione:
+ * - Utilizza la prop navigation per spostarsi tra le schermate dei menu dei giochi.
+ *
+ * Note aggiuntive:
+ * - Gli stili sono definiti in HomeStyles.js.
+ * - Il componente è pensato per essere la schermata di ingresso dell'app.
+ *
+ * In sintesi:
+ * Gestisce la visualizzazione e la selezione dei giochi disponibili, offrendo una panoramica interattiva e la possibilità di suggerire nuovi giochi.
+ */
+
 const games = [
   {
     id: '1',
