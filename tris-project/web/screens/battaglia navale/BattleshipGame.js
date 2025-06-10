@@ -1,9 +1,63 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, Button, Alert, TouchableOpacity, Modal } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, Button, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './BattleshipStyles';
 
-// Definizione delle navi standard
+/**
+ * BattleshipGameScreen – Documentazione
+ * 
+ * Questo componente React Native implementa il gioco della Battaglia Navale (Battleship) per due giocatori su un unico dispositivo.
+ * Gestisce sia la fase di posizionamento delle navi sia la fase di gioco vera e propria, con logica di turni, colpi, affondamento navi e gestione della vittoria.
+ * 
+ * ---
+ * 
+ * Stati principali:
+ * - boards: Array di due griglie (una per giocatore) che rappresentano lo stato delle celle (nave, colpita, ecc).
+ * - ships: Array di due liste di navi piazzate da ciascun giocatore.
+ * - placing: Oggetto che tiene traccia di chi sta posizionando, quale nave, orientamento e se ha finito.
+ * - turn: Indica di chi è il turno di gioco (0 o 1).
+ * - winner: Indica il vincitore (null se la partita è in corso).
+ * - showOwnBoard: Mostra la propria griglia in un modal.
+ * - isWaiting / waitSeconds: Gestisce il timer tra i turni di gioco.
+ * - isPlacingWait / placingWaitSeconds: Gestisce il timer tra i posizionamenti delle navi.
+ * - shotResult: Mostra il risultato dell’ultimo tiro (colpito, acqua, affondato).
+ * - pendingShipId: Permette di riposizionare una nave appena rimossa.
+ * 
+ * Funzioni principali:
+ * - createEmptyBoard(size): Crea una griglia vuota di dimensione size x size.
+ * - canPlaceShip(board, x, y, size, horizontal): Verifica se una nave può essere posizionata in una certa posizione e orientamento.
+ * - placeShip(board, x, y, size, horizontal, shipId): Posiziona una nave sulla griglia.
+ * - removeShip(board, ships, shipId): Rimuove una nave dalla griglia e dalla lista delle navi piazzate.
+ * - allShipsSunk(ships): Restituisce true se tutte le navi sono state affondate.
+ * - handlePlace(x, y): Gestisce il posizionamento o la rimozione di una nave sulla griglia durante la fase di piazzamento.
+ * - toggleOrientation(): Cambia l’orientamento della nave da posizionare.
+ * - getShipsList(): Restituisce la lista completa delle navi da piazzare.
+ * - getCurrentShipDef(): Restituisce la definizione della nave attualmente da piazzare.
+ * - handleShot(x, y): Gestisce il tiro su una cella della griglia avversaria.
+ * - handleReset(): Mostra un alert di conferma e, se confermato, resetta la partita tornando al menu.
+ * - renderCell() / renderBoard(): Funzioni di rendering per una cella e per l’intera griglia.
+ * 
+ * Fasi del gioco:
+ * 1. Posizionamento navi: Ogni giocatore, a turno, piazza le proprie navi sulla griglia.
+ * 2. Fase di gioco: I giocatori si alternano nel tirare sulla griglia avversaria.
+ * 3. Vittoria: Quando tutte le navi di un giocatore sono affondate, viene dichiarato il vincitore.
+ * 
+ * UI e Navigazione:
+ * - Modal: Permette di visualizzare la propria griglia in qualsiasi momento.
+ * - Timer: Timer visivi tra i turni e tra i posizionamenti.
+ * - Reset: Pulsante per resettare la partita.
+ * - Navigazione: Usa la prop navigation per cambiare schermata alla vittoria o al reset.
+ * 
+ * Note aggiuntive:
+ * - Il componente è pensato per il gioco locale su un solo dispositivo.
+ * - Tutta la logica di stato è gestita tramite React hooks.
+ * - Il codice è facilmente estendibile per aggiungere funzionalità come IA, multiplayer online, ecc.
+ * 
+ * In sintesi:
+ * Questo componente gestisce l’intero ciclo di una partita a Battaglia Navale tra due giocatori, dalla preparazione delle griglie fino alla dichiarazione del vincitore, con una UI reattiva e controlli intuitivi.
+ */
+
+
 const SHIPS = [
   { name: 'Portaerei', size: 5, count: 1 },
   { name: 'Corazzata', size: 4, count: 1 },
@@ -11,7 +65,6 @@ const SHIPS = [
   { name: 'Cacciatorpediniere', size: 2, count: 1 },
 ];
 
-// Crea una griglia vuota
 function createEmptyBoard(size) {
   return Array.from({ length: size }, () =>
     Array.from({ length: size }, () => ({
@@ -22,7 +75,6 @@ function createEmptyBoard(size) {
   );
 }
 
-// Controlla se una nave può essere piazzata in una posizione
 function canPlaceShip(board, x, y, size, horizontal) {
   const N = board.length;
   if (horizontal) {
@@ -39,7 +91,6 @@ function canPlaceShip(board, x, y, size, horizontal) {
   return true;
 }
 
-// Piazzamento nave sulla griglia
 function placeShip(board, x, y, size, horizontal, shipId) {
   const newBoard = board.map(row => row.map(cell => ({ ...cell })));
   if (horizontal) {
@@ -54,7 +105,6 @@ function placeShip(board, x, y, size, horizontal, shipId) {
   return newBoard;
 }
 
-// Rimuove una nave dalla griglia e dalla lista delle navi
 function removeShip(board, ships, shipId) {
   const newBoard = board.map(row => row.map(cell => {
     if (cell.shipId === shipId) {
@@ -66,7 +116,6 @@ function removeShip(board, ships, shipId) {
   return [newBoard, newShips];
 }
 
-// Controlla se tutte le navi sono affondate
 function allShipsSunk(ships) {
   return ships.every(ship => ship.hits >= ship.size);
 }
@@ -74,63 +123,59 @@ function allShipsSunk(ships) {
 export default function BattleshipGameScreen({ route, navigation }) {
   const { player1, player2, boardSize } = route.params;
 
-  // Stati per le griglie e le navi di entrambi i giocatori
   const [boards, setBoards] = useState([
     createEmptyBoard(boardSize),
     createEmptyBoard(boardSize),
   ]);
   const [ships, setShips] = useState([
-    [], // Player 1 ships
-    [], // Player 2 ships
+    [], 
+    [], 
   ]);
-  // Stato per la fase di piazzamento
+
   const [placing, setPlacing] = useState({
-    player: 0, // 0: player1, 1: player2
+    player: 0, 
     shipIndex: 0,
-    orientation: true, // true: orizzontale, false: verticale
+    orientation: true, 
     done: [false, false],
   });
-  // Stato per i turni di gioco
-  const [turn, setTurn] = useState(0); // 0: player1, 1: player2
-  // Stato per la partita finita
+  
+  const [turn, setTurn] = useState(0); 
+  
   const [winner, setWinner] = useState(null);
   const [showOwnBoard, setShowOwnBoard] = useState(false);
 
-  // Timer tra i turni e tra i posizionamenti
+  
   const [isWaiting, setIsWaiting] = useState(false);
   const [waitSeconds, setWaitSeconds] = useState(3);
   const waitTimeout = useRef(null);
 
-  // Stato per mostrare il risultato del tiro
+  
   const [shotResult, setShotResult] = useState(null);
 
-  // Stato per mostrare il timer dopo il posizionamento navi
+  
   const [isPlacingWait, setIsPlacingWait] = useState(false);
   const [placingWaitSeconds, setPlacingWaitSeconds] = useState(3);
 
-  // Stato per il ripristino nave rimossa
+  
   const [pendingShipId, setPendingShipId] = useState([null, null]);
 
-  // Gestione piazzamento/rimozione nave
+  
   const handlePlace = (x, y) => {
     if (placing.done[placing.player]) return;
     const currentBoard = boards[placing.player];
     const currentShips = ships[placing.player];
     const cell = currentBoard[x][y];
 
-    // Se c'è già una nave in questa cella, rimuovila e rendila la prossima da posizionare
     if (cell.hasShip) {
       const shipId = cell.shipId;
       const shipToRemove = currentShips.find(s => s.id === shipId);
 
-      // Rimuovi la nave dalla board e dalla lista delle navi piazzate
       const [newBoard, newShips] = removeShip(currentBoard, currentShips, shipId);
       const updatedBoards = [...boards];
       updatedBoards[placing.player] = newBoard;
       const updatedShips = [...ships];
       updatedShips[placing.player] = newShips;
 
-      // Trova la posizione della prima nave non ancora piazzata
       const shipsList = getShipsList();
       const typeCounts = {};
       for (const s of newShips) {
@@ -148,7 +193,6 @@ export default function BattleshipGameScreen({ route, navigation }) {
       }
       setBoards(updatedBoards);
       setShips(updatedShips);
-      // Salva il shipId da riutilizzare
       const newPendingShipId = [...pendingShipId];
       newPendingShipId[placing.player] = shipId;
       setPendingShipId(newPendingShipId);
@@ -164,7 +208,6 @@ export default function BattleshipGameScreen({ route, navigation }) {
       Alert.alert('Posizionamento non valido', 'Non puoi posizionare la nave qui.');
       return;
     }
-    // Usa pendingShipId se presente, altrimenti currentShips.length
     const shipId = pendingShipId[placing.player] !== null ? pendingShipId[placing.player] : currentShips.length;
     const newBoard = placeShip(currentBoard, x, y, shipDef.size, placing.orientation, shipId);
     const newShips = [
@@ -183,24 +226,21 @@ export default function BattleshipGameScreen({ route, navigation }) {
     const updatedShips = [...ships];
     updatedShips[placing.player] = newShips;
 
-    // Reset pendingShipId dopo averlo usato
     if (pendingShipId[placing.player] !== null) {
       const newPendingShipId = [...pendingShipId];
       newPendingShipId[placing.player] = null;
       setPendingShipId(newPendingShipId);
     }
 
-    // Passa alla prossima nave o al prossimo giocatore
     let nextShipIndex = placing.shipIndex + 1;
     let nextPlayer = placing.player;
     let done = [...placing.done];
     let placingWait = false;
-    // TIMER SOLO DOPO IL PRIMO GIOCATORE
     if (nextShipIndex >= getShipsList().length) {
       done[placing.player] = true;
       nextShipIndex = 0;
       nextPlayer = placing.player === 0 ? 1 : 0;
-      if (!done[1]) { // timer solo tra player 1 e player 2
+      if (!done[1]) { 
         placingWait = true;
         setIsPlacingWait(true);
         setPlacingWaitSeconds(3);
@@ -217,23 +257,22 @@ export default function BattleshipGameScreen({ route, navigation }) {
     if (placingWait) return;
   };
 
-  // Cambia orientamento nave
   const toggleOrientation = () => {
     setPlacing({ ...placing, orientation: !placing.orientation });
   };
 
-  // Ottieni la lista delle navi da piazzare
+
   function getShipsList() {
-    // Espandi la lista in base al count
+
     return SHIPS.flatMap(ship => Array(ship.count).fill(ship));
   }
 
-  // Ottieni la nave corrente da piazzare
+
   function getCurrentShipDef() {
     return getShipsList()[placing.shipIndex];
   }
 
-  // Gestione colpo
+
   const handleShot = (x, y) => {
     if (winner) return;
     if (!placing.done.every(Boolean)) return;
@@ -241,13 +280,12 @@ export default function BattleshipGameScreen({ route, navigation }) {
     const enemy = turn === 0 ? 1 : 0;
     const enemyBoard = boards[enemy];
     const cell = enemyBoard[x][y];
-    if (cell.hit) return; // Già colpito
+    if (cell.hit) return;
 
-    // Aggiorna la cella colpita
+
     const newEnemyBoard = enemyBoard.map(row => row.map(cell => ({ ...cell })));
     newEnemyBoard[x][y].hit = true;
 
-    // Aggiorna le navi se colpito
     let newEnemyShips = ships[enemy].map(ship => ({ ...ship }));
     let resultMsg = '';
     if (cell.hasShip) {
@@ -262,18 +300,17 @@ export default function BattleshipGameScreen({ route, navigation }) {
       resultMsg = 'Acqua!';
     }
 
-    // Aggiorna stato
+
     const updatedBoards = [...boards];
     updatedBoards[enemy] = newEnemyBoard;
     const updatedShips = [...ships];
     updatedShips[enemy] = newEnemyShips;
 
-    // Controlla vittoria
+
     if (allShipsSunk(newEnemyShips)) {
       setBoards(updatedBoards);
       setShips(updatedShips);
       setWinner(turn);
-      // Naviga alla schermata di vittoria
       navigation.navigate('VictoryBattleship', {
         winner: turn === 0 ? player1 : player2,
         player1,
@@ -286,7 +323,6 @@ export default function BattleshipGameScreen({ route, navigation }) {
     setBoards(updatedBoards);
     setShips(updatedShips);
 
-    // Mostra il risultato per 1 secondo, poi passa al cambio turno
     setShotResult(resultMsg);
     setTimeout(() => {
       setShotResult(null);
@@ -295,7 +331,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
     }, 1000);
   };
 
-  // Effetto per countdown tra i turni
+
   useEffect(() => {
     if (isWaiting) {
       if (waitSeconds > 0) {
@@ -310,7 +346,6 @@ export default function BattleshipGameScreen({ route, navigation }) {
     return () => clearTimeout(waitTimeout.current);
   }, [isWaiting, waitSeconds]);
 
-  // Effetto per countdown tra i posizionamenti
   useEffect(() => {
     if (isPlacingWait) {
       if (placingWaitSeconds > 0) {
@@ -324,7 +359,6 @@ export default function BattleshipGameScreen({ route, navigation }) {
     return () => clearTimeout(waitTimeout.current);
   }, [isPlacingWait, placingWaitSeconds]);
 
-  // Reset partita
   const handleReset = () => {
     Alert.alert(
       'Conferma Reset',
@@ -345,7 +379,6 @@ export default function BattleshipGameScreen({ route, navigation }) {
     );
   };
 
-  // Renderizza una cella della griglia
   function renderCell(board, x, y, onPress, showShips = false, cellSize = 28) {
     const cell = board[x][y];
     let bg = '#e6f2ff';
@@ -362,7 +395,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
         onPress={onPress}
         disabled={!!winner}
       >
-        {/* Mostra X per colpo, O per acqua */}
+
         {cell.hit ? (
           <Text>{cell.hasShip ? '✖' : '•'}</Text>
         ) : null}
@@ -370,7 +403,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
     );
   }
 
-  // Renderizza la griglia
+
   function renderBoard(board, onCellPress, showShips = false, cellSize = 28) {
     return (
       <View style={styles.board}>
@@ -385,7 +418,7 @@ export default function BattleshipGameScreen({ route, navigation }) {
     );
   }
 
-  // Fase di piazzamento navi
+
   if (!placing.done.every(Boolean)) {
     const currentPlayer = placing.player === 0 ? player1 : player2;
     const shipsList = getShipsList();
@@ -413,11 +446,9 @@ export default function BattleshipGameScreen({ route, navigation }) {
     );
   }
 
-  // Fase di gioco
   const currentPlayer = turn === 0 ? player1 : player2;
   const enemy = turn === 0 ? 1 : 0;
 
-  // Schermata di attesa tra i turni
   if (isWaiting) {
     return (
       <SafeAreaView style={styles.wrapper}>
@@ -433,7 +464,6 @@ export default function BattleshipGameScreen({ route, navigation }) {
     );
   }
 
-  // Schermata di attesa tra i posizionamenti delle navi
   if (isPlacingWait) {
     return (
       <SafeAreaView style={styles.wrapper}>
@@ -449,7 +479,6 @@ export default function BattleshipGameScreen({ route, navigation }) {
     );
   }
 
-  // Schermata di risultato tiro
   if (shotResult) {
     return (
       <SafeAreaView style={styles.wrapper}>
