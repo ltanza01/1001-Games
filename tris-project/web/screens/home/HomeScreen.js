@@ -78,7 +78,7 @@ const games = [
     description: 'Un gioco di scacchi per 2 giocatori.',
     minPlayers: 1,
     maxPlayers: 2,
-    route: null,
+    route: 'MenuScacchi',
     image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Chess.png?raw=true'
   },
   {

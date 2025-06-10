@@ -51,7 +51,13 @@ import GameBattleship from '../battaglia navale/BattleshipGame.js';
 import MenuBattleship from '../battaglia navale/BattleshipMenu.js';
 import VictoryBattleship from '../battaglia navale/BattleshipVictory.js';
 //DAMA
+import DamaGame from '../dama/DamaGame.js';
 import MenuDama from '../dama/DamaMenu.js';
+import DamaVictory from '../dama/DamaVictory.js';
+//SCACCHI
+import ChessGame from '../scacchi/ChessGame.js';
+import ChessMenu from '../scacchi/ChessMenu.js';
+import ChessVictory from '../scacchi/ChessVictory.js';
 //FLAPPY BIRD
 import GameFlappy from '../flappy-bird/FlappyGame.js';
 import MenuFlappy from '../flappy-bird/FlappyMenu.js';
@@ -60,8 +66,7 @@ import Leaderboard from '../flappy-bird/FlappyScore.js';
 import styles from './NavigationStyles.js';
 // Importato il contesto della musica
 import { MusicContext } from '../../../App';
-import DamaGame from '../dama/DamaGame.js';
-import DamaVictory from '../dama/DamaVictory.js';
+
 
 const Stack = createStackNavigator();
 
@@ -208,6 +213,9 @@ export default function App() {
         <Stack.Screen name="MenuDama" component={MenuDama} />
         <Stack.Screen name="GameDama" component={DamaGame} />
         <Stack.Screen name="VictoryDama" component={DamaVictory} />
+        <Stack.Screen name="MenuScacchi" component={ChessMenu} />
+        <Stack.Screen name="GameScacchi" component={ChessGame} />
+        <Stack.Screen name="ChessVictory" component={ChessVictory} />
         <Stack.Screen name="MenuFlappy" component={MenuFlappy} />
         <Stack.Screen name="GameFlappy" component={GameFlappy} />
         <Stack.Screen name="Leaderboard" component={Leaderboard} />
