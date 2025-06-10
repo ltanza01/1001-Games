@@ -3,6 +3,48 @@ import { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import styles from './DamaStyles.js';
 
+/**
+ * DamaGame – Documentazione
+ *
+ * Questo componente React Native implementa il gioco della Dama italiana per due giocatori (umani o contro il computer) su un unico dispositivo.
+ * Gestisce la logica di gioco, il movimento delle pedine, le regole di cattura, la promozione a dama e la determinazione del vincitore.
+ *
+ * ---
+ *
+ * Stati principali:
+ * - board: Stato della scacchiera (array 8x8) con posizione delle pedine.
+ * - currentPlayer: Giocatore corrente ("N" per nere, "B" per bianche).
+ * - selected: Coordinata della pedina selezionata.
+ * - gameStarted: Indica se la partita è iniziata.
+ *
+ * Props principali:
+ * - route.params: Oggetto che contiene player1, player2, mode (player-vs-player o player-vs-computer), difficulty.
+ *
+ * Funzioni principali:
+ * - createInitialBoard(): Crea la scacchiera iniziale con le pedine posizionate.
+ * - getPossibleMoves(): Restituisce le mosse possibili per una pedina.
+ * - getAllPossibleMoves(): Restituisce tutte le mosse possibili per il giocatore corrente.
+ * - handleCellClick(): Gestisce la selezione e il movimento delle pedine.
+ * - handleMove(): Esegue una mossa, gestisce catture e promozioni.
+ *
+ * Logica CPU:
+ * - Se la modalità è "player-vs-computer", la CPU effettua una mossa casuale tra quelle disponibili.
+ *
+ * UI:
+ * - Visualizza la scacchiera, le pedine, il turno corrente e i nomi dei giocatori.
+ * - Evidenzia la pedina selezionata.
+ *
+ * Navigazione:
+ * - Alla fine della partita, naviga alla schermata di vittoria ("VictoryDama") passando il vincitore e i parametri di gioco.
+ *
+ * Note aggiuntive:
+ * - Tutta la logica di stato è gestita tramite React hooks.
+ * - Il componente è pensato per l’uso locale su un unico dispositivo.
+ *
+ * In sintesi:
+ * Gestisce una partita completa di dama italiana, con supporto per due giocatori o contro il computer, dalla disposizione iniziale fino alla vittoria.
+ */
+
 const BOARD_SIZE = 8;
 
 function createInitialBoard() {
