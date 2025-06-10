@@ -3,51 +3,65 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#e6f2ff',
+    backgroundColor: '#87CEEB',
   },
   container: {
-    flexGrow: 1,
+    flex: 1,
     alignItems: 'center',
-    paddingVertical: 20,
-    backgroundColor: '#e6f2ff'
+    justifyContent: 'flex-start',
+    paddingTop: 60,
   },
   menu: {
-    backgroundColor: '#ffffff',
-    borderRadius: 15,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
     elevation: 5,
-    width: '90%',
-    padding: 30
+    width: 340,
+    maxWidth: '90%',
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: 'center',
+    fontSize: 36,
     fontWeight: 'bold',
-    color: '#333'
+    marginBottom: 30,
+    color: '#0072ff',
+    textShadowColor: '#fff',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+    textAlign: 'center',
   },
   formGroup: {
-    marginBottom: 15
-  },
-  dropdown: {
-  borderColor: '#ccc',
-  height: 48,
-  marginTop: 8,
-  },
-  dropdownContainer: {
-  borderColor: '#ccc',
-  zIndex: 1000,
+    width: '100%',
+    marginBottom: 18,
   },
   label: {
     fontSize: 18,
-    color: '#555',
-    marginBottom: 8
+    fontWeight: 'bold',
+    marginBottom: 6,
+    color: '#333',
   },
   input: {
+    backgroundColor: '#f2f2f2',
+    borderRadius: 10,
+    padding: 12,
+    fontSize: 16,
     borderWidth: 1,
     borderColor: '#ccc',
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: '#f9f9f9'
+    marginBottom: 4,
+  },
+  dropdown: {
+    backgroundColor: '#f2f2f2',
+    borderColor: '#ccc',
+    borderRadius: 10,
+    marginBottom: 4,
+  },
+  dropdownContainer: {
+    borderColor: '#ccc',
+    borderRadius: 10,
   },
   gameContainer: {
     flex: 1,

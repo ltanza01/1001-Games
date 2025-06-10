@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 40, 
+    fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 60,
-    color: '#fff',
+    color: '#87CEEB', 
     textShadowColor: '#333',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4,
@@ -83,6 +83,34 @@ const styles = StyleSheet.create({
     color: '#333',
     width: 50,
     textAlign: 'right',
+  },
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#87CEEB',
+  },
+  menu: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  menuButton: {
+    backgroundColor: '#FFD700',
+    paddingVertical: 16,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    marginVertical: 12,
+    elevation: 2,
+  },
+  menuButtonText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333',
   },
 });
 

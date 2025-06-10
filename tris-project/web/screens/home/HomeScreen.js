@@ -34,7 +34,7 @@ const games = [
     description: 'Un classico gioco di dama per 2 giocatori.',
     minPlayers: 1,
     maxPlayers: 2,
-    route: null,
+    route: 'MenuDama',
     image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Dama.png?raw=true', 
 
   },
