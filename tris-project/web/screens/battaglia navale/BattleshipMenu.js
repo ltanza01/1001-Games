@@ -1,17 +1,51 @@
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  Button,
   Alert,
+  Button,
   KeyboardAvoidingView,
   Platform,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import DropDownPicker from 'react-native-dropdown-picker';
-import styles from './BattleshipStyles.js';   
+import { SafeAreaView } from 'react-native-safe-area-context';
+import styles from './BattleshipStyles.js';
+
+/**
+ * BattleshipMenuScreen – Documentazione
+ *
+ * Questo componente React Native rappresenta il menu iniziale della modalità "Battaglia Navale" (Giocatore vs Giocatore).
+ * Permette agli utenti di inserire i nomi dei due giocatori e selezionare la dimensione del tabellone tramite un menu a tendina.
+ * Dopo la validazione dei dati, avvia la partita navigando verso la schermata di gioco, passando i parametri necessari.
+ *
+ * ---
+ *
+ * Stati principali:
+ * - player1: Nome del primo giocatore.
+ * - player2: Nome del secondo giocatore.
+ * - boardSize: Dimensione selezionata per il tabellone di gioco.
+ * - sizeOpen, sizeItems: Gestione dello stato del menu a tendina per la selezione della dimensione.
+ *
+ * Funzioni principali:
+ * - handleSubmit(): Valida i dati inseriti e, se corretti, naviga verso la schermata di gioco passando i parametri.
+ *
+ * UI:
+ * - TextInput: Per l’inserimento dei nomi dei giocatori.
+ * - DropDownPicker: Per la selezione della dimensione del tabellone.
+ * - Button: Per avviare la partita.
+ * - Alert: Mostra messaggi di errore se i dati non sono validi.
+ *
+ * Navigazione:
+ * - Utilizza la prop navigation per passare a 'GameBattleship' con i parametri raccolti.
+ *
+ * Note aggiuntive:
+ * - Tutta la logica di stato è gestita tramite React hooks.
+ * - Il componente è pensato per l’uso locale su un unico dispositivo.
+ *
+ * In sintesi:
+ * Questo componente gestisce la schermata di configurazione iniziale della modalità Battaglia Navale, raccogliendo i dati dei giocatori e la dimensione del tabellone prima di iniziare la partita.
+ */
 
 export default function BattleshipMenuScreen({ navigation }) {
   const [player1, setPlayer1] = useState('');
