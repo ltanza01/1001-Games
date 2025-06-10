@@ -2,7 +2,7 @@ import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from 'react-nati
 import styles from '../tris/TrisStyles';
 
 const scores = [
-  { id: '1', name: 'Lorenzo', score: 120 },
+  { id: '1', name: 'Tanza', score: 120 },
   { id: '2', name: 'Giulia', score: 95 },
   { id: '3', name: 'Marco', score: 80 },
   { id: '4', name: 'Sara', score: 60 },
@@ -23,7 +23,7 @@ const FlappyScore = ({ navigation }) => {
             renderItem={({ item, index }) => (
               <View
                 style={{
-                  backgroundColor: '#1976d2',
+                  backgroundColor: index === 0 ? '#FFD700' : '#1976d2', // oro per il primo
                   borderRadius: 16,
                   paddingVertical: 14,
                   paddingHorizontal: 24,
@@ -36,9 +36,33 @@ const FlappyScore = ({ navigation }) => {
                   elevation: 2,
                 }}
               >
-                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18, width: 30 }}>{index + 1}.</Text>
-                <Text style={{ color: '#fff', fontSize: 18, flex: 1, marginLeft: 10 }}>{item.name}</Text>
-                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18, width: 50, textAlign: 'right' }}>{item.score}</Text>
+                <Text style={{
+                  color: index === 0 ? '#b8860b' : '#fff',
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  width: 30
+                }}>
+                  {index + 1}.
+                </Text>
+                <Text style={{
+                  color: index === 0 ? '#b8860b' : '#fff',
+                  fontSize: 18,
+                  flex: 1,
+                  marginLeft: 10,
+                  fontWeight: index === 0 ? 'bold' : 'normal'
+                }}>
+                  {index === 0 ? '👑 ' : ''}
+                  {item.name}
+                </Text>
+                <Text style={{
+                  color: index === 0 ? '#b8860b' : '#fff',
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  width: 50,
+                  textAlign: 'right'
+                }}>
+                  {item.score}
+                </Text>
               </View>
             )}
           />
