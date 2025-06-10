@@ -1,3 +1,45 @@
+/**
+ * ChessMenu.js
+ * -----------------------------------------------------------------------------
+ * Schermata di selezione e configurazione partita per il gioco degli scacchi.
+ * 
+ * Funzionalità:
+ * - Permette di scegliere la modalità di gioco: Giocatore vs Giocatore o Giocatore vs Computer.
+ * - Permette di inserire i nomi dei giocatori.
+ * - Se si sceglie la modalità contro il computer, permette di selezionare la difficoltà.
+ * - Valida i dati inseriti e mostra messaggi di errore se mancano informazioni obbligatorie.
+ * - Avvia la partita passando i parametri necessari alla schermata di gioco.
+ * 
+ * Stato e variabili:
+ * - player1: stringa, nome del primo giocatore.
+ * - player2: stringa, nome del secondo giocatore (o "Computer" se contro CPU).
+ * - gameMode: stringa, modalità selezionata ('player-vs-player' o 'player-vs-computer').
+ * - difficulty: stringa, livello di difficoltà selezionato per la CPU.
+ * - modeOpen/difficultyOpen: booleani, gestiscono l'apertura dei menu a tendina.
+ * - modeItems/difficultyItems: array di oggetti, opzioni per i menu a tendina.
+ * 
+ * Funzioni principali:
+ * - handleSubmit(): valida i dati e naviga alla schermata di gioco passando i parametri.
+ * - onModeOpen/onDifficultyOpen(): assicurano che solo un menu a tendina sia aperto alla volta.
+ * 
+ * UI:
+ * - Utilizza DropDownPicker per la selezione delle modalità e della difficoltà.
+ * - Utilizza TextInput per l'inserimento dei nomi.
+ * - Il pulsante "Inizia il Gioco" è abilitato solo dopo aver inserito tutte le informazioni richieste.
+ * 
+ * Navigazione:
+ * - Alla conferma, naviga verso la schermata 'GameScacchi' passando player1, player2, mode e difficulty.
+ * 
+ * Dipendenze:
+ * - React, React Native, DropDownPicker, react-native-safe-area-context, ChessStyles.js per gli stili.
+ * 
+ * Personalizzazione:
+ * - Puoi modificare le opzioni delle modalità e delle difficoltà cambiando modeItems e difficultyItems.
+ * - Gli stili sono definiti in ChessStyles.js.
+ * 
+ * -----------------------------------------------------------------------------
+ */
+
 import { useCallback, useState } from 'react';
 import {
     Alert,

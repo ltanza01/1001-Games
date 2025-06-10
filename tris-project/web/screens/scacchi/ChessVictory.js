@@ -1,3 +1,40 @@
+/**
+ * ChessVictory.js
+ * -----------------------------------------------------------------------------
+ * Schermata di vittoria per il gioco degli scacchi.
+ * 
+ * Funzionalità:
+ * - Mostra il risultato della partita: vittoria per scacco matto o stallo.
+ * - Visualizza il nome del vincitore o un messaggio di stallo.
+ * - Mostra un'animazione di fuochi d'artificio.
+ * - Permette di iniziare una nuova partita o riavviare la partita appena conclusa.
+ * 
+ * Stato e variabili:
+ * - winner: stringa, nome del vincitore o "Stallo".
+ * - player1, player2: stringhe, nomi dei giocatori.
+ * - mode: modalità di gioco selezionata.
+ * - checkmate: booleano, true se la vittoria è per scacco matto, false se stallo.
+ * 
+ * Funzioni principali:
+ * - handleNewGame(): naviga al menu principale degli scacchi.
+ * - handleRestartGame(): riavvia la partita con gli stessi giocatori e modalità.
+ * 
+ * UI:
+ * - Messaggio di vittoria o stallo.
+ * - Animazione GIF di fuochi d'artificio.
+ * - Due pulsanti: "Nuova Partita" e "Riavvia la Partita".
+ * 
+ * Dipendenze:
+ * - React, React Native, ChessStyles.js per gli stili.
+ * - L'animazione utilizza una GIF locale.
+ * 
+ * Personalizzazione:
+ * - Puoi cambiare la GIF modificando il path in <Image>.
+ * - Gli stili sono definiti in ChessStyles.js.
+ * 
+ * -----------------------------------------------------------------------------
+ */
+
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './ChessStyles.js';
 
