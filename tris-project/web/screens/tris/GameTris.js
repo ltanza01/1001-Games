@@ -1,3 +1,38 @@
+/**
+ * GameTris – Documentazione
+ *
+ * Questo componente React Native implementa il gioco del Tris (Tic-Tac-Toe) per due giocatori (umani o contro il computer) su un unico dispositivo.
+ * Gestisce la logica di gioco, il turno dei giocatori, la modalità contro il computer con tre livelli di difficoltà, la verifica della vittoria o del pareggio e la navigazione alla schermata di vittoria.
+ *
+ * ---
+ *
+ * Props principali:
+ * - route.params: Oggetto che contiene player1, player2, mode (player-vs-player o player-vs-computer), difficulty, restart.
+ * - navigation: Oggetto di navigazione per cambiare schermata.
+ *
+ * Stati principali:
+ * - board: Array di 9 celle che rappresentano la griglia di gioco.
+ * - currentPlayer: Giocatore corrente ('X' o 'O').
+ * - isGameOver: Indica se la partita è terminata.
+ *
+ * Funzioni principali:
+ * - handleClick(): Gestisce la selezione di una cella da parte del giocatore.
+ * - checkWin(): Verifica se c'è una combinazione vincente sulla griglia.
+ * - computerPlay(): Gestisce la logica della CPU in base alla difficoltà selezionata.
+ * - getRandomMove(), getMediumMove(), getHardMove(): Algoritmi per la scelta della mossa della CPU.
+ * - resetGame(): Reimposta la griglia e lo stato per una nuova partita.
+ *
+ * UI:
+ * - Visualizza la griglia di gioco, il turno corrente, i pulsanti per resettare la griglia e tornare al menu.
+ *
+ * Note aggiuntive:
+ * - Tutta la logica di stato è gestita tramite React hooks.
+ * - Il componente è pensato per l’uso locale su un unico dispositivo.
+ *
+ * In sintesi:
+ * Gestisce una partita completa di Tris, con supporto per due giocatori o contro il computer, dalla disposizione iniziale fino alla vittoria o al pareggio.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import styles from './TrisStyles.js';
