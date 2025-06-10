@@ -7,7 +7,7 @@ const JUMP_HEIGHT = 60;
 const BIRD_SIZE = 40;
 const PIPE_WIDTH = 60;
 const GAP = 180;
-const PIPE_SPEED = 10; 
+const PIPE_SPEED = 3; // px per frame
 
 const getRandomPipeY = () => Math.floor(Math.random() * (height - GAP - 200)) + 100;
 
@@ -20,9 +20,41 @@ const FlappyGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
 
-  const gravityInterval = useRef();
-  const pipeInterval = useRef();
+  const gravityInterval = useRef(null);
+  const animationFrame = useRef(null);
 
+  // Movimento tubi manuale (non Animated.timing)
+  useEffect(() => {
+    if (!gameOver) {
+      animationFrame.current = requestAnimationFrame(movePipes);
+    }
+    return () => cancelAnimationFrame(animationFrame.current);
+    // eslint-disable-next-line
+  }, [gameOver, pipes]);
+
+  const movePipes = () => {
+    setPipes(prevPipes => {
+      return prevPipes.map((pipe, idx) => {
+        let newLeft = pipe.left._value - PIPE_SPEED;
+        let newPipeY = pipe.pipeY;
+        let passed = false;
+        if (newLeft < -PIPE_WIDTH) {
+          newLeft = width;
+          newPipeY = getRandomPipeY();
+          passed = true;
+        }
+        pipe.left.setValue(newLeft);
+        pipe.pipeY = newPipeY;
+        if (passed && !gameOver) setScore(s => s + 1);
+        return pipe;
+      });
+    });
+    if (!gameOver) {
+      animationFrame.current = requestAnimationFrame(movePipes);
+    }
+  };
+
+  // Gravità
   useEffect(() => {
     if (!gameOver) {
       gravityInterval.current = setInterval(() => {
@@ -36,36 +68,14 @@ const FlappyGame = () => {
     return () => clearInterval(gravityInterval.current);
   }, [gameOver]);
 
+  // Collisioni
   useEffect(() => {
-    if (!gameOver) {
-      pipeInterval.current = setInterval(() => {
-        setPipes(prevPipes =>
-          prevPipes.map(pipe => {
-            Animated.timing(pipe.left, {
-              toValue: -PIPE_WIDTH,
-              duration: ((pipe.left._value + PIPE_WIDTH) / PIPE_SPEED) * 16,
-              useNativeDriver: false,
-            }).start(({ finished }) => {
-              if (finished && !gameOver) {
-                pipe.left.setValue(width);
-                pipe.pipeY = getRandomPipeY();
-                setScore(s => s + 1);
-              }
-            });
-            return pipe;
-          })
-        );
-      }, 16);
-    }
-    return () => clearInterval(pipeInterval.current);
-  }, [gameOver]);
-
-  useEffect(() => {
-    const collision = () => {
-      pipes.forEach(pipe => {
+    if (gameOver) return;
+    const checkCollision = () => {
+      for (let pipe of pipes) {
         const pipeLeft = pipe.left._value;
         if (
-          pipeLeft < BIRD_SIZE + 30 &&
+          pipeLeft < 30 + BIRD_SIZE &&
           pipeLeft + PIPE_WIDTH > 30
         ) {
           if (
@@ -73,16 +83,21 @@ const FlappyGame = () => {
             birdBottom + BIRD_SIZE > pipe.pipeY + GAP
           ) {
             setGameOver(true);
+            return; // Interrompi subito il controllo collisioni
           }
         }
-      });
+      }
+      // Collisione con il soffitto o il pavimento
+      if (birdBottom + BIRD_SIZE > height) {
+        setGameOver(true);
+        return;
+      }
     };
-    if (!gameOver) {
-      const id = setInterval(collision, 16);
-      return () => clearInterval(id);
-    }
+    const id = setInterval(checkCollision, 16);
+    return () => clearInterval(id);
   }, [birdBottom, pipes, gameOver]);
 
+  // Reset
   const restartGame = () => {
     setBirdBottom(height / 2);
     setPipes([
@@ -93,8 +108,9 @@ const FlappyGame = () => {
     setGameOver(false);
   };
 
+  // Salto
   const jump = () => {
-    if (!gameOver && birdBottom < height - BIRD_SIZE) {
+    if (!gameOver && birdBottom < height - BIRD_SIZE - JUMP_HEIGHT) {
       setBirdBottom(prev => prev + JUMP_HEIGHT);
     }
   };
@@ -117,30 +133,29 @@ const FlappyGame = () => {
         />
         {pipes.map((pipe, idx) => (
           <React.Fragment key={idx}>
-            <Animated.View
+            {/* Tubo superiore */}
+            <Animated.Image
+              source={{ uri: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Tubo.png?raw=true' }}
               style={{
                 position: 'absolute',
                 left: pipe.left,
                 bottom: pipe.pipeY + GAP,
                 width: PIPE_WIDTH,
                 height: height - (pipe.pipeY + GAP),
-                backgroundColor: 'green',
-                borderColor: '#333',
-                borderWidth: 2,
-                borderRadius: 10,
+                resizeMode: 'stretch',
+                transform: [{ scaleY: -1 }], // capovolgi il tubo per quello superiore
               }}
             />
-            <Animated.View
+            {/* Tubo inferiore */}
+            <Animated.Image
+              source={{ uri: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Tubo.png?raw=true' }}
               style={{
                 position: 'absolute',
                 left: pipe.left,
                 bottom: 0,
                 width: PIPE_WIDTH,
                 height: pipe.pipeY,
-                backgroundColor: 'green',
-                borderColor: '#333',
-                borderWidth: 2,
-                borderRadius: 10,
+                resizeMode: 'stretch',
               }}
             />
           </React.Fragment>
