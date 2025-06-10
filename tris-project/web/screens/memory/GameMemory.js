@@ -1,3 +1,40 @@
+/**
+ * MemoryGameScreen – Documentazione
+ *
+ * Questo componente React Native implementa il gioco del Memory per due giocatori (umani o contro il computer) su un unico dispositivo.
+ * Gestisce la logica di gioco, la selezione delle tessere, il controllo delle coppie, il punteggio e la determinazione del vincitore.
+ *
+ * ---
+ *
+ * Props principali:
+ * - route.params: Oggetto che contiene player1, player2, mode (player-vs-player o player-vs-computer), difficulty.
+ * - navigation: Oggetto di navigazione per cambiare schermata.
+ *
+ * Stati principali:
+ * - board: Array di oggetti che rappresentano le tessere (emoji, stato matched, visibilità, colore).
+ * - currentPlayer: Giocatore corrente ('X' o 'O').
+ * - scores: Punteggi dei due giocatori.
+ * - selectedTiles: Indici delle tessere selezionate.
+ * - isGameOver: Indica se la partita è terminata.
+ *
+ * Funzioni principali:
+ * - handleClick(): Gestisce la selezione delle tessere da parte del giocatore.
+ * - checkMatch(): Controlla se le due tessere selezionate sono una coppia.
+ * - computerPlay(): Gestisce la logica della CPU in modalità contro il computer.
+ * - determineWinner(): Determina il vincitore e naviga alla schermata di vittoria.
+ * - resetGame(): Reimposta la griglia e i punteggi per una nuova partita.
+ *
+ * UI:
+ * - Visualizza la griglia delle tessere, i punteggi, il turno corrente e i pulsanti per resettare o tornare al menu.
+ *
+ * Note aggiuntive:
+ * - Tutta la logica di stato è gestita tramite React hooks.
+ * - Il componente è pensato per l’uso locale su un unico dispositivo.
+ *
+ * In sintesi:
+ * Gestisce una partita completa di Memory, con supporto per due giocatori o contro il computer, dalla disposizione iniziale fino alla vittoria.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from './MemoryStyles.js';
