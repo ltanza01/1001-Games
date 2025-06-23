@@ -1,45 +1,51 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+
+const { width } = Dimensions.get('window');
+const CARD_MARGIN = width * 0.025;
+const CARD_WIDTH = (width / 2) - (CARD_MARGIN * 2);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 10,
+    padding: width * 0.03,
   },
   row: {
     justifyContent: 'space-between',
+    marginBottom: width * 0.03,
   },
   card: {
-    flex: 1,
-    margin: 10,
+    width: CARD_WIDTH,
     backgroundColor: '#ffffff',
-    borderRadius: 8,
+    borderRadius: 10,
     overflow: 'hidden',
     elevation: 2,
+    marginHorizontal: CARD_MARGIN,
+    marginBottom: CARD_MARGIN * 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.08,
     shadowRadius: 4,
   },
   cardImage: {
     width: '100%',
-    height: 150,
+    height: CARD_WIDTH * 0.6,
   },
   cardContent: {
-    padding: 10,
+    padding: width * 0.03,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: width * 0.05,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: width * 0.01,
   },
   cardDescription: {
-    fontSize: 14,
+    fontSize: width * 0.035,
     color: '#333',
-    marginBottom: 5,
+    marginBottom: width * 0.01,
   },
   cardPlayers: {
-    fontSize: 12,
+    fontSize: width * 0.03,
     color: '#888',
   },
 });

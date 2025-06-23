@@ -1,29 +1,40 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+
+const { width } = Dimensions.get('window');
+const HEADER_PADDING_TOP = width * 0.18;
+const HEADER_ICON_SIZE = width * 0.09;
+const MODAL_WIDTH = width * 0.85;
+const MODAL_RADIUS = width * 0.08;
+const MODAL_HEADER_PADDING = width * 0.06;
+const MODAL_TITLE_FONT = width * 0.06;
+const MENU_ITEM_FONT = width * 0.048;
+const MENU_ITEM_EXIT_FONT = width * 0.043;
+const SEARCHBAR_WIDTH = width * 0.7;
+const SEARCHBAR_HEIGHT = width * 0.12;
+const SEARCHBAR_FONT = width * 0.045;
+
 const styles = StyleSheet.create({
   headerContainer: {
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     textAlign: 'center',
-    paddingTop: 100,
+    paddingTop: HEADER_PADDING_TOP,
     backgroundColor: '#007bff',
   },
   headerButton: {
-    padding: 10,
-    paddingBottom:0,
+    padding: width * 0.025,
+    paddingBottom: 0,
   },
   headerText: {
-    color: '#ffffff', 
+    color: '#ffffff',
     textAlign: 'center',
   },
   headerTextLabel: {
-    color: '#fff', 
+    color: '#fff',
     textAlign: 'center',
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   activeButton: {
     borderBottomWidth: 2,
@@ -39,13 +50,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    width: 300,
+    width: MODAL_WIDTH,
     backgroundColor: '#fff',
-    borderRadius: 32,
+    borderRadius: MODAL_RADIUS,
     paddingVertical: 0,
     paddingHorizontal: 0,
     elevation: 12,
-    minHeight: 220,
+    minHeight: width * 0.55,
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 4 },
     shadowOpacity: 0.18,
@@ -57,44 +68,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#007bff',
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    paddingHorizontal: 22,
-    paddingVertical: 22,
+    borderTopLeftRadius: MODAL_RADIUS,
+    borderTopRightRadius: MODAL_RADIUS,
+    paddingHorizontal: MODAL_HEADER_PADDING,
+    paddingVertical: MODAL_HEADER_PADDING,
   },
   modalTitle: {
     color: 'white',
-    fontSize: 24,
+    fontSize: MODAL_TITLE_FONT,
     fontWeight: 'bold',
     letterSpacing: 1,
   },
   modalCloseButton: {
     backgroundColor: 'rgba(255,255,255,0.12)',
-    borderRadius: 20,
-    padding: 4,
+    borderRadius: width * 0.05,
+    padding: width * 0.012,
   },
   menuContent: {
-    padding: 18,
+    padding: width * 0.045,
   },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 14,
-    borderRadius: 14,
-    marginBottom: 2,
-    paddingHorizontal: 6,
+    paddingVertical: width * 0.037,
+    borderRadius: width * 0.037,
+    marginBottom: width * 0.01,
+    paddingHorizontal: width * 0.015,
   },
   menuIcon: {
-    marginRight: 16,
+    marginRight: width * 0.04,
   },
   menuItemText: {
-    fontSize: 19,
+    fontSize: MENU_ITEM_FONT,
     color: '#1976d2',
     fontWeight: 'bold',
     letterSpacing: 0.5,
   },
   menuItemStarText: {
-    fontSize: 19,
+    fontSize: MENU_ITEM_FONT,
     color: '#1976d2',
     fontWeight: 'bold',
     letterSpacing: 0.5,
@@ -102,13 +113,13 @@ const styles = StyleSheet.create({
   menuItemExit: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    borderRadius: 14,
-    marginTop: 6,
-    paddingHorizontal: 6,
+    paddingVertical: width * 0.032,
+    borderRadius: width * 0.037,
+    marginTop: width * 0.015,
+    paddingHorizontal: width * 0.015,
   },
   menuItemExitText: {
-    fontSize: 17,
+    fontSize: MENU_ITEM_EXIT_FONT,
     color: '#e53935',
     fontWeight: 'bold',
     letterSpacing: 0.5,
@@ -116,20 +127,20 @@ const styles = StyleSheet.create({
   menuSeparator: {
     height: 1,
     backgroundColor: '#e3e8f0',
-    marginVertical: 2,
+    marginVertical: width * 0.005,
   },
   hamburgerButton: {
-    padding: 10,
+    padding: width * 0.025,
   },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f1f3f4',
-    borderRadius: 24,
+    borderRadius: width * 0.06,
     marginTop: 0,
     paddingHorizontal: 12,
-    width: 260,
-    height: 44,
+    width: SEARCHBAR_WIDTH,
+    height: SEARCHBAR_HEIGHT,
     shadowColor: '#000',
     shadowOpacity: 0.08,
     shadowRadius: 4,
@@ -140,7 +151,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    fontSize: 18,
+    fontSize: SEARCHBAR_FONT,
     color: '#222',
     backgroundColor: 'transparent',
     paddingVertical: 0,

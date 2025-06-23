@@ -1,4 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+
+const { width } = Dimensions.get('window');
+const PADDING = width * 0.06;
+const MENU_WIDTH = width * 0.92;
+const MENU_PADDING = width * 0.07;
+const TITLE_FONT = width * 0.09;
+const LABEL_FONT = width * 0.045;
+const INPUT_FONT = width * 0.04;
+const BUTTON_FONT = width * 0.042;
+const VICTORY_FONT = width * 0.08;
+const FIREWORKS_SIZE = width * 0.6;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -9,25 +20,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 60,
+    paddingTop: PADDING,
   },
   menu: {
     backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 30,
+    padding: MENU_PADDING,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    width: 340,
-    maxWidth: '90%',
+    width: MENU_WIDTH,
+    maxWidth: '98%',
   },
   title: {
-    fontSize: 36,
+    fontSize: TITLE_FONT,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: PADDING * 0.5,
     color: '#0072ff',
     textShadowColor: '#fff',
     textShadowOffset: { width: 2, height: 2 },
@@ -36,10 +47,10 @@ const styles = StyleSheet.create({
   },
   formGroup: {
     width: '100%',
-    marginBottom: 18,
+    marginBottom: PADDING * 0.3,
   },
   label: {
-    fontSize: 18,
+    fontSize: LABEL_FONT,
     fontWeight: 'bold',
     marginBottom: 6,
     color: '#333',
@@ -47,8 +58,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#f2f2f2',
     borderRadius: 10,
-    padding: 12,
-    fontSize: 16,
+    padding: PADDING * 0.3,
+    fontSize: INPUT_FONT,
     borderWidth: 1,
     borderColor: '#ccc',
     marginBottom: 4,
@@ -65,13 +76,13 @@ const styles = StyleSheet.create({
   },
   gameContainer: {
     flex: 1,
-    padding: 20,
+    padding: PADDING * 0.7,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
   },
   turnIndicator: {
-    fontSize: 18,
+    fontSize: LABEL_FONT,
     marginBottom: 10,
     color: '#00c6ff',
   },
@@ -80,7 +91,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   scoreText: {
-    fontSize: 18,
+    fontSize: LABEL_FONT,
     color: '#00c6ff',
     marginHorizontal: 20,
   },
@@ -92,47 +103,47 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   tile: {
-    width: '16.66%', 
-    height: '16.66%', 
+    width: '16.66%',
+    height: '16.66%',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#fff',
   },
   tileText: {
-    fontSize: 30,
+    fontSize: width * 0.075,
     textAlign: 'center',
     color: '#fff',
   },
   button: {
-    padding: 14,
+    padding: PADDING * 0.35,
     marginTop: 10,
     backgroundColor: '#0072ff',
     borderRadius: 8,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: BUTTON_FONT,
     textAlign: 'center',
   },
   victoryContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'linear-gradient(to right, #00c6ff, #0072ff)',
-    padding: 20,
+    backgroundColor: '#87CEEB', // gradiente non supportato nativamente
+    padding: PADDING,
   },
   victoryMessage: {
-    fontSize: 32,
+    fontSize: VICTORY_FONT,
     fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: PADDING * 0.5,
   },
   fireworks: {
-    width: 300,
-    height: 300,
-    marginBottom: 20,
+    width: FIREWORKS_SIZE,
+    height: FIREWORKS_SIZE,
+    marginBottom: PADDING * 0.5,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -140,7 +151,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   victoryButton: {
-    padding: 14,
+    padding: PADDING * 0.35,
     margin: 10,
     backgroundColor: '#0072ff',
     borderRadius: 8,
@@ -149,7 +160,7 @@ const styles = StyleSheet.create({
   },
   victoryButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: BUTTON_FONT,
   }
 });
 

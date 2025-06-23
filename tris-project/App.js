@@ -1,6 +1,7 @@
-import React, { createContext, useState, useEffect, useRef } from 'react';
-import AppNavigator from './web/screens/navigation/Navigation';
 import { Audio } from 'expo-av';
+import { createContext, useEffect, useRef, useState } from 'react';
+import { AppState } from 'react-native';
+import AppNavigator from './web/screens/navigation/Navigation';
 
 /**
  * App.js – Documentazione
@@ -32,21 +33,48 @@ import { Audio } from 'expo-av';
 // Context per la musica
 export const MusicContext = createContext();
 
-export default function App() {
+export function MusicProvider({ children }) {
   const [muted, setMuted] = useState(false);
-  const soundRef = useRef(null);
+  const appState = useRef(AppState.currentState);
+  const musicRef = useRef(null);
+
+  // Funzione per mettere in pausa la musica
+  const pauseMusic = () => {
+    if (musicRef.current && musicRef.current.pause) {
+      musicRef.current.pause();
+    }
+  };
+
+  // Funzione per riprendere la musica
+  const playMusic = () => {
+    if (musicRef.current && musicRef.current.play && !muted) {
+      musicRef.current.play();
+    }
+  };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'background' || nextAppState === 'inactive') {
+        pauseMusic();
+      } else if (nextAppState === 'active') {
+        playMusic();
+      }
+      appState.current = nextAppState;
+    });
+    return () => subscription.remove();
+  }, [muted]);
 
   useEffect(() => {
     let isMounted = true;
     async function loadAndPlay() {
-      if (soundRef.current) return;
+      if (musicRef.current) return;
       const { sound } = await Audio.Sound.createAsync(
         //require('./web/assets/pierino-sigla.mp3'), //Audio Pierino per le Gag
         require('./web/assets/background-music.mp3'), // Audio Reale
         { isLooping: true, volume: 1 }
       );
       if (isMounted) {
-        soundRef.current = sound;
+        musicRef.current = sound;
         await sound.playAsync();
         await sound.setIsMutedAsync(muted);
       }
@@ -54,24 +82,33 @@ export default function App() {
     loadAndPlay();
     return () => {
       isMounted = false;
-      if (soundRef.current) {
-        soundRef.current.unloadAsync();
-        soundRef.current = null;
+      if (musicRef.current) {
+        musicRef.current.unloadAsync();
+        musicRef.current = null;
       }
     };
   }, []);
 
   useEffect(() => {
-    if (soundRef.current) {
-      soundRef.current.setIsMutedAsync(muted);
+    if (musicRef.current) {
+      musicRef.current.setIsMutedAsync(muted);
     }
   }, [muted]);
 
-  const toggleMute = () => setMuted(m => !m);
-
   return (
-    <MusicContext.Provider value={{ muted, toggleMute }}>
-      <AppNavigator />
+    <MusicContext.Provider value={{
+      muted,
+      toggleMute: () => setMuted(m => !m),
+    }}>
+      {children}
     </MusicContext.Provider>
+  );
+}
+
+export default function App() {
+  return (
+    <MusicProvider>
+      <AppNavigator />
+    </MusicProvider>
   );
 }

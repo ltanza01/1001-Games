@@ -1,14 +1,32 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const { width } = Dimensions.get('window');
+const PADDING_TOP = width * 0.12;
+const MENU_WIDTH = width * 0.92;
+const MENU_PADDING = width * 0.07;
+const TITLE_FONT = width * 0.09;
+const LABEL_FONT = width * 0.045;
+const INPUT_FONT = width * 0.04;
+const BOARD_SIZE = width * 0.96;
+const CELL_SIZE = BOARD_SIZE / 8;
+const PIECE_FONT = width * 0.07;
+const INFO_MARGIN_TOP = width * 0.04;
+const TURN_FONT = width * 0.045;
+const TURN_PADDING = width * 0.025;
+const VICTORY_FONT = width * 0.08;
+const FIREWORKS_SIZE = width * 0.6;
+const BUTTON_FONT = width * 0.042;
+const BUTTON_PADDING = width * 0.035;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 60,
+    paddingTop: PADDING_TOP,
     backgroundColor: '#87CEEB',
   },
-  // --- MENU STYLES (da TrisStyles) ---
+  // --- MENU STYLES ---
   wrapper: {
     flex: 1,
     backgroundColor: '#87CEEB',
@@ -16,22 +34,22 @@ const styles = StyleSheet.create({
   menu: {
     backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 30,
+    padding: MENU_PADDING,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    width: 340,
-    maxWidth: '90%',
+    width: MENU_WIDTH,
+    maxWidth: '98%',
   },
   formGroup: {
     width: '100%',
-    marginBottom: 18,
+    marginBottom: MENU_PADDING * 0.6,
   },
   label: {
-    fontSize: 18,
+    fontSize: LABEL_FONT,
     fontWeight: 'bold',
     marginBottom: 6,
     color: '#333',
@@ -39,8 +57,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#f2f2f2',
     borderRadius: 10,
-    padding: 12,
-    fontSize: 16,
+    padding: MENU_PADDING * 0.4,
+    fontSize: INPUT_FONT,
     borderWidth: 1,
     borderColor: '#ccc',
     marginBottom: 4,
@@ -59,9 +77,9 @@ const styles = StyleSheet.create({
   // --- FINE MENU STYLES ---
 
   title: {
-    fontSize: 36,
+    fontSize: TITLE_FONT,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: MENU_PADDING * 0.8,
     color: '#0072ff',
     textShadowColor: '#fff',
     textShadowOffset: { width: 2, height: 2 },
@@ -69,18 +87,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   board: {
+    width: BOARD_SIZE,
+    height: BOARD_SIZE,
     borderWidth: 3,
     borderColor: "#636e72",
     backgroundColor: "#222f3e",
     padding: 4,
-    marginBottom: 18,
+    marginBottom: MENU_PADDING * 0.6,
   },
   row: {
     flexDirection: "row",
   },
   cell: {
-    width: 38,
-    height: 38,
+    width: CELL_SIZE,
+    height: CELL_SIZE,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -99,29 +119,29 @@ const styles = StyleSheet.create({
     borderColor: "#b2bec3",
   },
   pieceW: {
-    fontSize: 28,
+    fontSize: PIECE_FONT,
     color: "#fff",
     textShadowColor: "#636e72",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
   pieceB: {
-    fontSize: 28,
+    fontSize: PIECE_FONT,
     color: "#222f3e",
     textShadowColor: "#636e72",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
   info: {
-    marginTop: 16,
+    marginTop: INFO_MARGIN_TOP,
     alignItems: "center",
   },
   turn: {
-    fontSize: 18,
+    fontSize: TURN_FONT,
     fontWeight: "bold",
     color: "#222f3e",
     backgroundColor: "#dfe6e9",
-    padding: 8,
+    padding: TURN_PADDING,
     borderRadius: 8,
     textAlign: "center",
   },
@@ -138,19 +158,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+    padding: MENU_PADDING,
   },
   victoryMessage: {
-    fontSize: 32,
+    fontSize: VICTORY_FONT,
     fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: MENU_PADDING * 0.7,
   },
   fireworks: {
-    width: 300,
-    height: 300,
-    marginBottom: 20,
+    width: FIREWORKS_SIZE,
+    height: FIREWORKS_SIZE,
+    marginBottom: MENU_PADDING * 0.7,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -158,7 +178,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   victoryButton: {
-    padding: 14,
+    padding: BUTTON_PADDING,
     margin: 10,
     backgroundColor: '#0072ff',
     borderRadius: 8,
@@ -167,7 +187,7 @@ const styles = StyleSheet.create({
   },
   victoryButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: BUTTON_FONT,
   },
 });
 

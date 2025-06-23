@@ -1,6 +1,22 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
-const CELL_SIZE = 44;
+const { width } = Dimensions.get('window');
+const PADDING_TOP = width * 0.12;
+const MENU_WIDTH = width * 0.92;
+const MENU_PADDING = width * 0.07;
+const TITLE_FONT = width * 0.09;
+const LABEL_FONT = width * 0.045;
+const INPUT_FONT = width * 0.04;
+const BUTTON_FONT = width * 0.045;
+const BUTTON_PADDING = width * 0.035;
+const VICTORY_FONT = width * 0.08;
+const FIREWORKS_SIZE = width * 0.6;
+const CELL_SIZE = width * 0.11;
+const PIECE_SIZE = CELL_SIZE * 0.65;
+const PIECE_K_SIZE = CELL_SIZE * 0.75;
+const PIECE_K_FONT = width * 0.045;
+const TURN_FONT = width * 0.045;
+const TURN_PADDING = width * 0.025;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -11,25 +27,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 60,
+    paddingTop: PADDING_TOP,
   },
   menu: {
     backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 30,
+    padding: MENU_PADDING,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    width: 340,
+    width: MENU_WIDTH,
     maxWidth: '90%',
   },
   title: {
-    fontSize: 36,
+    fontSize: TITLE_FONT,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: MENU_PADDING * 0.8,
     color: '#0072ff',
     textShadowColor: '#fff',
     textShadowOffset: { width: 2, height: 2 },
@@ -38,10 +54,10 @@ const styles = StyleSheet.create({
   },
   formGroup: {
     width: '100%',
-    marginBottom: 18,
+    marginBottom: MENU_PADDING * 0.5,
   },
   label: {
-    fontSize: 18,
+    fontSize: LABEL_FONT,
     fontWeight: 'bold',
     marginBottom: 6,
     color: '#333',
@@ -49,8 +65,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#f2f2f2',
     borderRadius: 10,
-    padding: 12,
-    fontSize: 16,
+    padding: MENU_PADDING * 0.4,
+    fontSize: INPUT_FONT,
     borderWidth: 1,
     borderColor: '#ccc',
     marginBottom: 4,
@@ -64,25 +80,26 @@ const styles = StyleSheet.create({
   dropdownContainer: {
     borderColor: '#ccc',
     borderRadius: 10,
+    zIndex: 1000,
   },
   victoryContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+    padding: MENU_PADDING,
   },
   victoryMessage: {
-    fontSize: 32,
+    fontSize: VICTORY_FONT,
     fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: MENU_PADDING,
   },
   fireworks: {
-    width: 300,
-    height: 300,
-    marginBottom: 20,
+    width: FIREWORKS_SIZE,
+    height: FIREWORKS_SIZE,
+    marginBottom: MENU_PADDING,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -90,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   victoryButton: {
-    padding: 14,
+    padding: BUTTON_PADDING * 1.2,
     margin: 10,
     backgroundColor: '#0072ff',
     borderRadius: 8,
@@ -99,12 +116,12 @@ const styles = StyleSheet.create({
   },
   victoryButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: BUTTON_FONT,
   },
   boardWrapper: {
     aspectRatio: 1,
     width: '98%',
-    maxWidth: 380,
+    maxWidth: width * 0.98,
     alignSelf: 'center',
     marginVertical: 10,
     alignItems: 'center',
@@ -120,8 +137,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   cell: {
-    width: 44,
-    height: 44,
+    width: CELL_SIZE,
+    height: CELL_SIZE,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
@@ -144,11 +161,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f9fa",
   },
   pieceN: {
-    width: 28, height: 28, borderRadius: 14,
-    backgroundColor: "#232946", // grigio/blu notte
+    width: PIECE_SIZE,
+    height: PIECE_SIZE,
+    borderRadius: PIECE_SIZE / 2,
+    backgroundColor: "#232946",
     borderWidth: 2,
-    borderColor: "#b8c1ec",    // bordo chiaro
-    alignItems: "center", justifyContent: "center",
+    borderColor: "#b8c1ec",
+    alignItems: "center",
+    justifyContent: "center",
     shadowColor: "#232946",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.18,
@@ -156,11 +176,14 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   pieceB: {
-    width: 28, height: 28, borderRadius: 14,
-    backgroundColor: "#fff",   // bianco puro
+    width: PIECE_SIZE,
+    height: PIECE_SIZE,
+    borderRadius: PIECE_SIZE / 2,
+    backgroundColor: "#fff",
     borderWidth: 2,
-    borderColor: "#b8c1ec",    // bordo chiaro
-    alignItems: "center", justifyContent: "center",
+    borderColor: "#b8c1ec",
+    alignItems: "center",
+    justifyContent: "center",
     shadowColor: "#b8c1ec",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.13,
@@ -168,11 +191,14 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   pieceNK: {
-    width: 32, height: 32, borderRadius: 16,
+    width: PIECE_K_SIZE,
+    height: PIECE_K_SIZE,
+    borderRadius: PIECE_K_SIZE / 2,
     backgroundColor: "#232946",
     borderWidth: 2,
-    borderColor: "#f6c177",    // bordo oro per dama nera
-    alignItems: "center", justifyContent: "center",
+    borderColor: "#f6c177",
+    alignItems: "center",
+    justifyContent: "center",
     shadowColor: "#232946",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.22,
@@ -180,11 +206,14 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   pieceBK: {
-    width: 32, height: 32, borderRadius: 16,
+    width: PIECE_K_SIZE,
+    height: PIECE_K_SIZE,
+    borderRadius: PIECE_K_SIZE / 2,
     backgroundColor: "#fff",
     borderWidth: 2,
-    borderColor: "#f6c177",    // bordo oro per dama bianca
-    alignItems: "center", justifyContent: "center",
+    borderColor: "#f6c177",
+    alignItems: "center",
+    justifyContent: "center",
     shadowColor: "#b8c1ec",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.18,
@@ -192,20 +221,24 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   pieceNKText: {
-    color: "#f6c177", fontSize: 18, fontWeight: "bold"
+    color: "#f6c177",
+    fontSize: PIECE_K_FONT,
+    fontWeight: "bold"
   },
   pieceBKText: {
-    color: "#f6c177", fontSize: 18, fontWeight: "bold"
+    color: "#f6c177",
+    fontSize: PIECE_K_FONT,
+    fontWeight: "bold"
   },
   turnBox: {
     marginTop: 12,
-    fontSize: 18,
+    fontSize: TURN_FONT,
     fontWeight: "bold",
     textAlign: "center",
     color: "#222",
     backgroundColor: "#dfe6e9",
     borderRadius: 8,
-    padding: 8,
+    padding: TURN_PADDING * 1.2,
     marginHorizontal: 40,
     overflow: "hidden"
   },
