@@ -1,6 +1,7 @@
-import React, { createContext, useState, useEffect, useRef } from 'react';
-import AppNavigator from './web/screens/navigation/Navigation';
 import { Audio } from 'expo-av';
+import { createContext, useEffect, useRef, useState } from 'react';
+import { AppState } from 'react-native';
+import AppNavigator from './web/screens/navigation/Navigation';
 
 /**
  * App.js – Documentazione
@@ -16,6 +17,10 @@ import { Audio } from 'expo-av';
  *   - Caricamento e riproduzione automatica della traccia all'avvio dell'app.
  *   - Loop continuo della traccia musicale.
  *   - Possibilità di mutare o riattivare la musica tramite toggleMute.
+ *   - Gestione intelligente degli stati dell'app (background/foreground).
+ *   - Pausa automatica della musica quando l'app va in background.
+ *   - Ripresa automatica della musica quando l'app torna in foreground (se non mutata).
+ *   - Configurazione dell'audio session per prevenire la riproduzione in background.
  *   - Pulizia della risorsa audio al termine del ciclo di vita del componente.
  *
  * Componenti principali:
@@ -24,9 +29,11 @@ import { Audio } from 'expo-av';
  * Note aggiuntive:
  * - Tutta la logica di stato è gestita tramite React hooks.
  * - Il context MusicContext permette di controllare la musica da qualsiasi punto dell'app.
+ * - La musica viene automaticamente pausata quando l'app va in background per rispettare le best practices mobile.
  *
  * In sintesi:
- * Inizializza l'applicazione, gestisce la musica di sottofondo e fornisce il contesto musicale a tutti i componenti figli.
+ * Inizializza l'applicazione, gestisce la musica di sottofondo con controlli intelligenti per gli stati dell'app,
+ * e fornisce il contesto musicale a tutti i componenti figli.
  */
 
 // Context per la musica
@@ -34,12 +41,26 @@ export const MusicContext = createContext();
 
 export default function App() {
   const [muted, setMuted] = useState(false);
+  const [appState, setAppState] = useState(AppState.currentState);
   const soundRef = useRef(null);
 
   useEffect(() => {
     let isMounted = true;
     async function loadAndPlay() {
       if (soundRef.current) return;
+      
+      // Configurazione della sessione audio
+      try {
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: false,
+          playsInSilentModeIOS: true,
+          shouldDuckAndroid: true,
+          staysActiveInBackground: false, // Importante: impedisce la riproduzione in background
+        });
+      } catch (error) {
+        console.log('Errore nella configurazione audio:', error);
+      }
+      
       const { sound } = await Audio.Sound.createAsync(
         //require('./web/assets/pierino-sigla.mp3'), //Audio Pierino per le Gag
         require('./web/assets/background-music.mp3'), // Audio Reale
@@ -59,13 +80,36 @@ export default function App() {
         soundRef.current = null;
       }
     };
-  }, []);
+  }, [muted]);
 
   useEffect(() => {
     if (soundRef.current) {
       soundRef.current.setIsMutedAsync(muted);
     }
   }, [muted]);
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (soundRef.current) {
+        if (appState.match(/inactive|background/) && nextAppState === 'active') {
+          // App è tornata in foreground, riprendi la musica se non è mutata
+          if (!muted) {
+            soundRef.current.playAsync();
+          }
+        } else if (nextAppState.match(/inactive|background/)) {
+          // App è andata in background, pausa la musica
+          soundRef.current.pauseAsync();
+        }
+      }
+      setAppState(nextAppState);
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      subscription?.remove();
+    };
+  }, [appState, muted]);
 
   const toggleMute = () => setMuted(m => !m);
 
