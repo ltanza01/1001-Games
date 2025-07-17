@@ -62,6 +62,10 @@ import ChessVictory from '../scacchi/ChessVictory.js';
 import GameFlappy from '../flappy-bird/FlappyGame.js';
 import MenuFlappy from '../flappy-bird/FlappyMenu.js';
 import Leaderboard from '../flappy-bird/FlappyScore.js';
+//FRECCETTE
+import FreccetteGame from '../freccette/FreccetteGame.js';
+import FreccetteMenu from '../freccette/FreccetteMenu.js';
+import FreccetteVictory from '../freccette/FreccetteVictory.js';
 //ALTRI IMPORT
 import styles from './NavigationStyles.js';
 // Importato il contesto della musica
@@ -219,6 +223,9 @@ export default function App() {
         <Stack.Screen name="MenuFlappy" component={MenuFlappy} />
         <Stack.Screen name="GameFlappy" component={GameFlappy} />
         <Stack.Screen name="Leaderboard" component={Leaderboard} />
+        <Stack.Screen name="MenuFreccette" component={FreccetteMenu} />
+        <Stack.Screen name="GameFreccette" component={FreccetteGame} />
+        <Stack.Screen name="VictoryFreccette" component={FreccetteVictory} />
       </Stack.Navigator>
     </NavigationContainer>
   );

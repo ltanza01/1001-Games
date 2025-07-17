@@ -89,6 +89,15 @@ const games = [
     maxPlayers: 1,
     route: 'MenuFlappy',
     image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/Flappy-bird.png?raw=true',
+  },
+  {
+    id: '7',
+    title: 'Freccette',
+    description: 'Gioco di freccette con modalità 501, 301 e Cricket.',
+    minPlayers: 1,
+    maxPlayers: 2,
+    route: 'MenuFreccette',
+    image: 'https://github.com/ltanza01/1001-Games/blob/app/tris-project/web/assets/immo-wegmann-DX3_dXuHVl8-unsplash.jpg?raw=true',
   }
 ];
 
