@@ -59,6 +59,13 @@ overlayContent: {
   padding: 24,
   alignItems: 'center',
 },
+modalText: {
+  fontSize: 24,
+  fontWeight: 'bold',
+  color: '#0072ff',
+  marginBottom: 16,
+  letterSpacing: 1,
+},
 closeButton: {
   marginTop: 16,
   paddingVertical: 8,

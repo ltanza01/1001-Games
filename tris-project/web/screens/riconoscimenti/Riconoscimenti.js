@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Image, Text, TouchableOpacity, View, Modal, Pressable } from 'react-native';
+import { useState } from 'react';
+import { Modal, Pressable, Text, TouchableOpacity, View } from 'react-native';
 import styles from './RiconoscimentiStyles.js';
 
 /**
@@ -51,11 +51,13 @@ const Riconoscimenti = ({ navigation }) => {
       >
         <View style={styles.overlay}>
           <View style={styles.overlayContent}>
-            <Image
+            {/* Immagine temporaneamente commentata per evitare errori di build */}
+            {/* <Image
               source={require('../../assets/Tanza.png')}
               style={styles.image}
               resizeMode="contain"
-            />
+            /> */}
+            <Text style={styles.modalText}>Tanza®</Text>
             <Pressable onPress={() => setModalVisible(false)} style={styles.closeButton}>
               <Text style={styles.closeButtonText}>Chiudi</Text>
             </Pressable>

@@ -2,7 +2,7 @@
   "expo": {
     "name": "1001 GAMES",
     "slug": "tris-project",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -22,7 +22,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tanza01.trisproject",
+      "versionCode": 14
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,6 +39,10 @@
     },
     "updates": {
       "url": "https://u.expo.dev/ab95084b-59c0-4b87-ba89-c4172c257a75"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-web-browser"
+    ]
   }
 }
